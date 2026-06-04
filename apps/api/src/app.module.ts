@@ -10,6 +10,7 @@ import { validateEnvironment } from './config/validation.schema';
 import { PrismaModule } from './database/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HealthModule } from './modules/health/health.module';
+import { ShopOwnersModule } from './modules/shop-owners/shop-owners.module';
 import { ShopsModule } from './modules/shops/shops.module';
 import { UsersModule } from './modules/users/users.module';
 
@@ -26,7 +27,8 @@ import { UsersModule } from './modules/users/users.module';
     HealthModule,
     AuthModule,
     UsersModule,
-    ShopsModule
+    ShopsModule,
+    ShopOwnersModule
   ],
   providers: [
     {
