@@ -1,0 +1,39 @@
+export type ClassValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | ClassValue[]
+  | Record<string, boolean | null | undefined>;
+
+export function cn(...values: ClassValue[]): string {
+  const classes: string[] = [];
+
+  for (const value of values) {
+    if (!value) {
+      continue;
+    }
+
+    if (typeof value === 'string' || typeof value === 'number') {
+      classes.push(String(value));
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      const nested = cn(...value);
+      if (nested) {
+        classes.push(nested);
+      }
+      continue;
+    }
+
+    for (const [className, enabled] of Object.entries(value)) {
+      if (enabled) {
+        classes.push(className);
+      }
+    }
+  }
+
+  return classes.join(' ');
+}

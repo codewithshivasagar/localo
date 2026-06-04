@@ -19,6 +19,7 @@
       "@localo/ui": ["packages/ui/src/index.ts"],
       "@localo/theme": ["packages/theme/src/index.ts"],
       "@localo/api-client": ["packages/api-client/src/index.ts"],
+      "@localo/assets": ["packages/assets/src/index.ts"],
       "@localo/config": ["packages/config/src/index.ts"],
       "@localo/types": ["packages/types/src/index.ts"],
       "@localo/constants": ["packages/constants/src/index.ts"],

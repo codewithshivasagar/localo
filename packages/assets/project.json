@@ -1,0 +1,13 @@
+{
+  "name": "assets",
+  "projectType": "library",
+  "sourceRoot": "packages/assets/src",
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --dir packages/assets typecheck"
+      }
+    }
+  }
+}
