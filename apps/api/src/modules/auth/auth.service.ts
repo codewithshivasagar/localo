@@ -39,7 +39,7 @@ export class AuthService {
   async login(email: string, password: string): Promise<AuthResponseData> {
     const user = await this.usersService.findByEmailWithPassword(email);
 
-    if (!user || user.status !== 'ACTIVE') {
+    if (!user || !user.passwordHash || user.status !== 'ACTIVE') {
       throw new UnauthorizedException('Invalid credentials');
     }
 
