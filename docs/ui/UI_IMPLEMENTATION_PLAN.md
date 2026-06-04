@@ -508,6 +508,20 @@ No React Query hooks
 No API changes
 ```
 
+## Acceptance Checklist
+
+```txt
+Button supports Localo green primary CTA, icons, fullWidth, loading, and disabled states
+Input/FormField support labels, help text, error text, icons/actions, and accessible field wiring
+PasswordInput supports a generic show/hide toggle
+Card supports elevated login-card-ready styling through generic variant/padding props
+Alert supports compact destructive/error usage
+Spinner and LoadingState work standalone and inside Button
+No business components added
+No app screens created
+Typecheck passes
+```
+
 ---
 
 # UI-6: Admin App Shell

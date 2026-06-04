@@ -312,6 +312,41 @@ or use approved theme token classes.
 
 ---
 
+## Shared Primitive UX Alignment
+
+Shared primitives in `packages/ui` must be mobile-first, theme-friendly, and ready for Localo auth/admin UX without becoming screen-specific.
+
+Button, Input, FormField, Card, Alert, and Loading primitives should support:
+
+```txt
+44px-friendly interactive sizing where practical
+Visible Localo green focus states
+Loading, disabled, help, and error states
+Generic variants only
+ClassName escape hatches for composition
+Accessible labels and field relationships where practical
+```
+
+Do not add login-only, admin-only, shop-only, or business-specific styling inside shared primitives.
+
+Good:
+
+```tsx
+<Button variant="primary" fullWidth isLoading={isSubmitting}>
+  Continue
+</Button>
+```
+
+Bad:
+
+```tsx
+<Button className="admin-login-green-button">
+  Sign in to Admin
+</Button>
+```
+
+---
+
 ## Naming Rules
 
 ### Files

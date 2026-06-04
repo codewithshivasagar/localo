@@ -8,9 +8,15 @@ import type { InputProps } from '../input/input.types';
 export interface PasswordInputProps extends Omit<InputProps, 'rightAddon' | 'type'> {
   hideLabel?: string;
   showLabel?: string;
+  showToggleLabel?: boolean;
 }
 
-export function PasswordInput({ hideLabel = 'Hide', showLabel = 'Show', ...props }: PasswordInputProps) {
+export function PasswordInput({
+  hideLabel = 'Hide',
+  showLabel = 'Show',
+  showToggleLabel = true,
+  ...props
+}: PasswordInputProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -19,12 +25,12 @@ export function PasswordInput({ hideLabel = 'Hide', showLabel = 'Show', ...props
       rightAddon={
         <Button
           aria-label={isVisible ? hideLabel : showLabel}
-          className="-mr-2 min-h-9 px-2 text-xs"
+          className="-mr-1 min-h-10 px-2 text-xs"
           onClick={() => setIsVisible((value) => !value)}
           type="button"
           variant="ghost"
         >
-          {isVisible ? hideLabel : showLabel}
+          {showToggleLabel ? (isVisible ? hideLabel : showLabel) : <span aria-hidden="true">•••</span>}
         </Button>
       }
       type={isVisible ? 'text' : 'password'}
