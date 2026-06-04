@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: [
+    "@localo/assets",
     "@localo/ui",
     "@localo/theme",
     "@localo/types",

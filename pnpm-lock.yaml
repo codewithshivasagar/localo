@@ -23,6 +23,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@localo/assets':
+        specifier: workspace:*
+        version: link:../../packages/assets
       '@localo/constants':
         specifier: workspace:*
         version: link:../../packages/constants

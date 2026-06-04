@@ -1,15 +1,21 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+import { AdminRootTemplate, AdminShellTemplate } from '../templates';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Localo Admin",
-  description: "Localo marketplace"
+  title: 'Localo Admin',
+  description: 'Localo marketplace operations console'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AdminRootTemplate>
+          <AdminShellTemplate>{children}</AdminShellTemplate>
+        </AdminRootTemplate>
+      </body>
     </html>
   );
 }
