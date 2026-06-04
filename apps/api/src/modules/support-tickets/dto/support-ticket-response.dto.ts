@@ -2,69 +2,69 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SupportTicketPriority, SupportTicketStatus } from '@prisma/client';
 
 export class SupportTicketUserSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   fullName!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   email!: string;
 }
 
 export class SupportTicketShopSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 }
 
 export class SupportAttachmentResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   mediaId!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   publicUrl?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   altText?: string | null;
 }
 
 export class SupportMessageResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   body!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isInternalNote!: boolean;
 
-  @ApiProperty({ type: SupportTicketUserSummaryDto })
+  @ApiProperty({ type: () => SupportTicketUserSummaryDto })
   sender!: SupportTicketUserSummaryDto;
 
-  @ApiProperty({ type: [SupportAttachmentResponseDto] })
+  @ApiProperty({ type: () => [SupportAttachmentResponseDto] })
   attachments!: SupportAttachmentResponseDto[];
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 }
 
 export class SupportTicketResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ticketNumber!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   category!: string;
 
   @ApiProperty({ enum: SupportTicketPriority })
@@ -73,53 +73,52 @@ export class SupportTicketResponseDto {
   @ApiProperty({ enum: SupportTicketStatus })
   status!: SupportTicketStatus;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   subject!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   description!: string;
 
-  @ApiProperty({ type: SupportTicketUserSummaryDto })
+  @ApiProperty({ type: () => SupportTicketUserSummaryDto })
   createdBy!: SupportTicketUserSummaryDto;
 
-  @ApiPropertyOptional({ type: SupportTicketUserSummaryDto })
+  @ApiPropertyOptional({ type: () => SupportTicketUserSummaryDto, nullable: true })
   assignedTo?: SupportTicketUserSummaryDto | null;
 
-  @ApiPropertyOptional({ type: SupportTicketShopSummaryDto })
+  @ApiPropertyOptional({ type: () => SupportTicketShopSummaryDto, nullable: true })
   shop?: SupportTicketShopSummaryDto | null;
 
-  @ApiProperty({ type: [SupportMessageResponseDto] })
+  @ApiProperty({ type: () => [SupportMessageResponseDto] })
   messages!: SupportMessageResponseDto[];
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   resolvedAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 }
 
 export class SupportTicketEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: SupportTicketResponseDto })
+  @ApiProperty({ type: () => SupportTicketResponseDto })
   data!: SupportTicketResponseDto;
 }
 
 export class SupportTicketListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [SupportTicketResponseDto] })
+  @ApiProperty({ type: () => [SupportTicketResponseDto] })
   data!: SupportTicketResponseDto[];
 }
-

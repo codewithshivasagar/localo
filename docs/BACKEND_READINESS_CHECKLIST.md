@@ -59,4 +59,5 @@
   - `corepack pnpm --filter @localo/shared-types typecheck`
   - `corepack pnpm --filter @localo/db exec prisma validate --schema prisma/schema.prisma`
   - `corepack pnpm --filter @localo/db generate`
-
+- Seed a local admin user for the Admin UI when needed:
+  - `ADMIN_EMAIL=admin@localo.dev ADMIN_PASSWORD='Admin@12345' ADMIN_NAME='Localo Admin' corepack pnpm --filter @localo/db seed:admin`

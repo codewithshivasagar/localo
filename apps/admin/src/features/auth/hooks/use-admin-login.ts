@@ -2,9 +2,9 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { authApi, localoTokenStorage, type AuthUser } from '@localo/api-client';
+import { localoTokenStorage, type AuthUser } from '@localo/api-client';
 import { AdminRoutes } from '../../../config';
-import { ADMIN_AUTH_COPY, isAdminRole } from '../config';
+import { ADMIN_AUTH_COPY, adminAuthApi, isAdminRole } from '../config';
 import { loginSchema, type LoginFormValues } from '../schemas';
 
 export interface AdminLoginState {
@@ -20,7 +20,7 @@ const initialState: AdminLoginState = {
 };
 
 async function resolveSessionUser(sessionUser?: AuthUser): Promise<AuthUser> {
-  return sessionUser ?? authApi.me();
+  return sessionUser ?? adminAuthApi.me();
 }
 
 export function useAdminLogin() {
@@ -48,7 +48,7 @@ export function useAdminLogin() {
     setState({ errors: {}, formError: null, isSubmitting: true });
 
     try {
-      const session = await authApi.login(parsed.data);
+      const session = await adminAuthApi.login(parsed.data);
       const user = await resolveSessionUser(session.user);
 
       if (!isAdminRole(user.role)) {

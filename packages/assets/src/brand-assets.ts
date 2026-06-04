@@ -1,25 +1,25 @@
 import { createLocaloAssetPath } from './asset-paths';
 import type { LocaloAssetMap } from './assets.types';
 
-export type LocaloBrandAssetKey = 'logoMark' | 'logoHorizontal' | 'themeReference';
+export type LocaloBrandAssetKey = 'localoLogo' | 'localoLogoTransparent' | 'localoLogoTransparentLight';
 
 export const localoBrandAssets = {
-  logoMark: {
-    key: 'logoMark',
-    src: createLocaloAssetPath('brand', 'localo-logo-mark.png'),
-    alt: 'Localo logo mark',
+  localoLogo: {
+    key: 'localoLogo',
+    src: createLocaloAssetPath('brand', 'localo-logo-tight.png'),
+    alt: 'Localo logo',
     category: 'brand'
   },
-  logoHorizontal: {
-    key: 'logoHorizontal',
-    src: createLocaloAssetPath('brand', 'localo-logo-horizontal.png'),
-    alt: 'Localo horizontal logo',
+  localoLogoTransparent: {
+    key: 'localoLogoTransparent',
+    src: createLocaloAssetPath('brand', 'localo-logo-transparent.png'),
+    alt: 'Localo transparent logo',
     category: 'brand'
   },
-  themeReference: {
-    key: 'themeReference',
-    src: createLocaloAssetPath('brand', 'localo-theme.png'),
-    alt: 'Localo theme reference',
+  localoLogoTransparentLight: {
+    key: 'localoLogoTransparentLight',
+    src: createLocaloAssetPath('brand', 'localo_logo_light.png'),
+    alt: 'Localo transparent light logo',
     category: 'brand'
   }
 } as const satisfies LocaloAssetMap<LocaloBrandAssetKey>;

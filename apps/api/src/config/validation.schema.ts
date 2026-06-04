@@ -9,7 +9,11 @@ const environmentSchema = z.object({
   JWT_REFRESH_SECRET: z.string().min(1),
   JWT_ACCESS_EXPIRES_IN: z.string().min(1).default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().min(1).default('7d'),
-  CORS_ORIGIN: z.string().min(1).default('http://localhost:4200')
+  CORS_ORIGIN: z.string().min(1).default('http://localhost:3001'),
+  ENABLE_SWAGGER: z.enum(['true', 'false']).default('true'),
+  ADMIN_EMAIL: z.string().optional(),
+  ADMIN_PASSWORD: z.string().optional(),
+  ADMIN_NAME: z.string().optional()
 });
 
 export const validateEnvironment = (environment: Record<string, unknown>) =>

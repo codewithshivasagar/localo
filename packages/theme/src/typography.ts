@@ -1,6 +1,6 @@
 export const localoTypography = {
   fontSans:
-    "Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+    `"Plus Jakarta Sans",Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif`,
   fontMono:
     "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
   headingWeight: "700",

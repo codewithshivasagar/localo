@@ -1,13 +1,13 @@
-import { randomUUID } from 'node:crypto';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import type { JwtSignOptions } from '@nestjs/jwt';
-import { compare, hash } from 'bcryptjs';
-import { Role } from '@localo/shared-types';
-import { PrismaService } from '../../database/prisma.service';
-import { UsersService } from '../users/users.service';
-import type { UserResponseDto } from '../users/dto/user-response.dto';
+import { randomUUID } from "node:crypto";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import type { JwtSignOptions } from "@nestjs/jwt";
+import { compare, hash } from "bcryptjs";
+import { Role } from "@localo/shared-types";
+import { PrismaService } from "../../database/prisma.service";
+import { UsersService } from "../users/users.service";
+import type { UserResponseDto } from "../users/dto/user-response.dto";
 
 interface JwtAccessPayload {
   sub: string;
@@ -30,23 +30,23 @@ export interface AuthResponseData {
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly configService: ConfigService,
-    private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
-    private readonly usersService: UsersService
+    @Inject(UsersService) private readonly usersService: UsersService,
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(JwtService) private readonly jwtService: JwtService,
+    @Inject(ConfigService) private readonly configService: ConfigService,
   ) {}
 
   async login(email: string, password: string): Promise<AuthResponseData> {
     const user = await this.usersService.findByEmailWithPassword(email);
 
-    if (!user || !user.passwordHash || user.status !== 'ACTIVE') {
-      throw new UnauthorizedException('Invalid credentials');
+    if (!user || !user.passwordHash || user.status !== "ACTIVE") {
+      throw new UnauthorizedException("Invalid credentials");
     }
 
     const passwordMatches = await compare(password, user.passwordHash);
 
     if (!passwordMatches) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException("Invalid credentials");
     }
 
     return this.issueAuthResponse(user);
@@ -58,21 +58,25 @@ export class AuthService {
       where: {
         id: payload.tokenId,
         userId: payload.sub,
-        revokedAt: null
+        revokedAt: null,
       },
       include: {
-        user: true
-      }
+        user: true,
+      },
     });
 
     if (!storedToken || storedToken.expiresAt <= new Date()) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException("Invalid refresh token");
     }
 
     const tokenMatches = await compare(refreshToken, storedToken.tokenHash);
 
-    if (!tokenMatches || storedToken.user.status !== 'ACTIVE' || storedToken.user.deletedAt) {
-      throw new UnauthorizedException('Invalid refresh token');
+    if (
+      !tokenMatches ||
+      storedToken.user.status !== "ACTIVE" ||
+      storedToken.user.deletedAt
+    ) {
+      throw new UnauthorizedException("Invalid refresh token");
     }
 
     await this.revokeRefreshToken(payload.tokenId, payload.sub);
@@ -86,18 +90,18 @@ export class AuthService {
       where: {
         id: payload.tokenId,
         userId: payload.sub,
-        revokedAt: null
-      }
+        revokedAt: null,
+      },
     });
 
     if (!storedToken) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException("Invalid refresh token");
     }
 
     const tokenMatches = await compare(refreshToken, storedToken.tokenHash);
 
     if (!tokenMatches) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException("Invalid refresh token");
     }
 
     await this.revokeRefreshToken(payload.tokenId, payload.sub);
@@ -118,41 +122,37 @@ export class AuthService {
     const tokens = await this.issueTokens({
       id: user.id,
       email: user.email,
-      role: user.role as Role
+      role: user.role as Role,
     });
 
     return {
       user: userResponse,
-      tokens
+      tokens,
     };
   }
 
-  private async issueTokens(user: {
-    id: string;
-    email: string;
-    role: Role;
-  }) {
+  private async issueTokens(user: { id: string; email: string; role: Role }) {
     const tokenId = randomUUID();
     const accessPayload: JwtAccessPayload = {
       sub: user.id,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
     const refreshPayload: JwtRefreshPayload = {
       ...accessPayload,
-      tokenId
+      tokenId,
     };
     const refreshExpiresIn = this.getRefreshExpiresIn();
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(accessPayload, {
-        secret: this.configService.getOrThrow<string>('jwt.accessSecret'),
-        expiresIn: this.getAccessExpiresIn()
+        secret: this.configService.getOrThrow<string>("jwt.accessSecret"),
+        expiresIn: this.getAccessExpiresIn(),
       }),
       this.jwtService.signAsync(refreshPayload, {
-        secret: this.configService.getOrThrow<string>('jwt.refreshSecret'),
-        expiresIn: refreshExpiresIn.raw
-      })
+        secret: this.configService.getOrThrow<string>("jwt.refreshSecret"),
+        expiresIn: refreshExpiresIn.raw,
+      }),
     ]);
 
     await this.prisma.refreshToken.create({
@@ -160,23 +160,28 @@ export class AuthService {
         id: tokenId,
         userId: user.id,
         tokenHash: await hash(refreshToken, 12),
-        expiresAt: refreshExpiresIn.date
-      }
+        expiresAt: refreshExpiresIn.date,
+      },
     });
 
     return {
       accessToken,
-      refreshToken
+      refreshToken,
     };
   }
 
-  private async verifyRefreshToken(refreshToken: string): Promise<JwtRefreshPayload> {
+  private async verifyRefreshToken(
+    refreshToken: string,
+  ): Promise<JwtRefreshPayload> {
     try {
-      return await this.jwtService.verifyAsync<JwtRefreshPayload>(refreshToken, {
-        secret: this.configService.getOrThrow<string>('jwt.refreshSecret')
-      });
+      return await this.jwtService.verifyAsync<JwtRefreshPayload>(
+        refreshToken,
+        {
+          secret: this.configService.getOrThrow<string>("jwt.refreshSecret"),
+        },
+      );
     } catch {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException("Invalid refresh token");
     }
   }
 
@@ -185,26 +190,26 @@ export class AuthService {
       where: {
         id: tokenId,
         userId,
-        revokedAt: null
+        revokedAt: null,
       },
       data: {
-        revokedAt: new Date()
-      }
+        revokedAt: new Date(),
+      },
     });
   }
 
   private getRefreshExpiresIn() {
-    const raw = this.configService.get<string>('jwt.refreshExpiresIn') ?? '7d';
+    const raw = this.configService.get<string>("jwt.refreshExpiresIn") ?? "7d";
 
     return {
-      raw: raw as JwtSignOptions['expiresIn'],
-      date: new Date(Date.now() + parseDurationMs(raw))
+      raw: raw as JwtSignOptions["expiresIn"],
+      date: new Date(Date.now() + parseDurationMs(raw)),
     };
   }
 
-  private getAccessExpiresIn(): JwtSignOptions['expiresIn'] {
-    return (this.configService.get<string>('jwt.accessExpiresIn') ??
-      '15m') as JwtSignOptions['expiresIn'];
+  private getAccessExpiresIn(): JwtSignOptions["expiresIn"] {
+    return (this.configService.get<string>("jwt.accessExpiresIn") ??
+      "15m") as JwtSignOptions["expiresIn"];
   }
 }
 
@@ -220,7 +225,7 @@ const parseDurationMs = (duration: string) => {
     s: 1000,
     m: 60 * 1000,
     h: 60 * 60 * 1000,
-    d: 24 * 60 * 60 * 1000
+    d: 24 * 60 * 60 * 1000,
   };
 
   return amount * multipliers[match.groups.unit];

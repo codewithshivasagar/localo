@@ -2,12 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserResponseDto } from './user-response.dto';
 
 export class CurrentUserResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty({ example: 'Current user fetched successfully' })
+  @ApiProperty({ type: String, example: 'Current user fetched successfully' })
   message!: string;
 
-  @ApiProperty({ type: UserResponseDto })
+  @ApiProperty({ type: () => UserResponseDto })
   data!: UserResponseDto;
 }

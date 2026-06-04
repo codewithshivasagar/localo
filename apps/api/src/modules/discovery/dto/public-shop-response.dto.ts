@@ -1,163 +1,162 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class PublicShopMediaResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   publicUrl?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   altText?: string | null;
 }
 
 export class PublicShopCategoryResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isPrimary!: boolean;
 }
 
 export class PublicShopLocationResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   label!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   addressLine1!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   addressLine2?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   areaId?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   areaName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   cityId?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   cityName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   stateName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   countryName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   pincode?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   latitude!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   longitude!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isPrimary!: boolean;
 }
 
 export class PublicShopBusinessHourResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   dayOfWeek!: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   opensAt?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   closesAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isClosed!: boolean;
 }
 
 export class PublicShopResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   description?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   phone?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   email?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   websiteUrl?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ratingAvg!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   ratingCount!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isFeatured!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isOpenNow!: boolean;
 
-  @ApiPropertyOptional({ type: PublicShopMediaResponseDto })
+  @ApiPropertyOptional({ type: () => PublicShopMediaResponseDto, nullable: true })
   logoMedia?: PublicShopMediaResponseDto | null;
 
-  @ApiPropertyOptional({ type: PublicShopMediaResponseDto })
+  @ApiPropertyOptional({ type: () => PublicShopMediaResponseDto, nullable: true })
   coverMedia?: PublicShopMediaResponseDto | null;
 
-  @ApiProperty({ type: [PublicShopCategoryResponseDto] })
+  @ApiProperty({ type: () => [PublicShopCategoryResponseDto] })
   categories!: PublicShopCategoryResponseDto[];
 
-  @ApiProperty({ type: [PublicShopLocationResponseDto] })
+  @ApiProperty({ type: () => [PublicShopLocationResponseDto] })
   locations!: PublicShopLocationResponseDto[];
 
-  @ApiProperty({ type: [PublicShopBusinessHourResponseDto] })
+  @ApiProperty({ type: () => [PublicShopBusinessHourResponseDto] })
   businessHours!: PublicShopBusinessHourResponseDto[];
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 }
 
 export class PublicShopEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: PublicShopResponseDto })
+  @ApiProperty({ type: () => PublicShopResponseDto })
   data!: PublicShopResponseDto;
 }
 
 export class PublicShopListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [PublicShopResponseDto] })
+  @ApiProperty({ type: () => [PublicShopResponseDto] })
   data!: PublicShopResponseDto[];
 }
-

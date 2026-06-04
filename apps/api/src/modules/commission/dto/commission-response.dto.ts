@@ -8,62 +8,62 @@ import {
 } from '@prisma/client';
 
 export class CommissionShopSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 }
 
 export class CommissionPlanResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   code!: string;
 
   @ApiProperty({ enum: CommissionType })
   commissionType!: CommissionType;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   commissionRate!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   fixedAmount!: string;
 
   @ApiProperty({ enum: BillingCycle })
   billingCycle!: BillingCycle;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   gracePeriodDays!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isActive!: boolean;
 }
 
 export class CommissionSettingResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   shopId!: string;
 
-  @ApiProperty({ type: CommissionShopSummaryDto })
+  @ApiProperty({ type: () => CommissionShopSummaryDto })
   shop!: CommissionShopSummaryDto;
 
-  @ApiProperty({ type: CommissionPlanResponseDto })
+  @ApiProperty({ type: () => CommissionPlanResponseDto })
   commissionPlan!: CommissionPlanResponseDto;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   customCommissionRate?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   customFixedAmount?: string | null;
 
   @ApiPropertyOptional({ enum: BillingCycle })
@@ -72,156 +72,155 @@ export class CommissionSettingResponseDto {
   @ApiProperty({ enum: CommissionSettingStatus })
   status!: CommissionSettingStatus;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   autoPauseOnOverdue!: boolean;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   nextInvoiceDate?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 }
 
 export class CommissionLedgerItemResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   invoiceNumber!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   shopId!: string;
 
-  @ApiProperty({ type: CommissionShopSummaryDto })
+  @ApiProperty({ type: () => CommissionShopSummaryDto })
   shop!: CommissionShopSummaryDto;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   billingPeriodStart!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   billingPeriodEnd!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   subtotalAmount!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   taxAmount!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   discountAmount!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   totalAmount!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   amountPaid!: string;
 
   @ApiProperty({ enum: InvoiceStatus })
   status!: InvoiceStatus;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   dueDate!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   issuedAt?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   paidAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 }
 
 export class CommissionPaymentResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   amount!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   paymentMethod!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   referenceNumber?: string | null;
 
   @ApiProperty({ enum: ShopPaymentStatus })
   status!: ShopPaymentStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   receivedAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 }
 
 export class CommissionSummaryResponseDto {
-  @ApiProperty({ type: CommissionShopSummaryDto })
+  @ApiProperty({ type: () => CommissionShopSummaryDto })
   shop!: CommissionShopSummaryDto;
 
-  @ApiPropertyOptional({ type: CommissionSettingResponseDto })
+  @ApiPropertyOptional({ type: () => CommissionSettingResponseDto, nullable: true })
   setting?: CommissionSettingResponseDto | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   totalInvoiced!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   totalPaid!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   totalOutstanding!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   overdueInvoiceCount!: number;
 
-  @ApiProperty({ type: [CommissionPaymentResponseDto] })
+  @ApiProperty({ type: () => [CommissionPaymentResponseDto] })
   recentPayments!: CommissionPaymentResponseDto[];
 }
 
 export class CommissionSettingEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: CommissionSettingResponseDto })
+  @ApiProperty({ type: () => CommissionSettingResponseDto })
   data!: CommissionSettingResponseDto;
 }
 
 export class CommissionSettingListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [CommissionSettingResponseDto] })
+  @ApiProperty({ type: () => [CommissionSettingResponseDto] })
   data!: CommissionSettingResponseDto[];
 }
 
 export class CommissionLedgerListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [CommissionLedgerItemResponseDto] })
+  @ApiProperty({ type: () => [CommissionLedgerItemResponseDto] })
   data!: CommissionLedgerItemResponseDto[];
 }
 
 export class CommissionSummaryEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: CommissionSummaryResponseDto })
+  @ApiProperty({ type: () => CommissionSummaryResponseDto })
   data!: CommissionSummaryResponseDto;
 }
-

@@ -4,7 +4,7 @@ import { AdminRoutes } from './admin-routes.enum';
 
 export const adminAppConfig = {
   brand: {
-    logo: localoBrandAssets.logoMark,
+    logo: localoBrandAssets.localoLogo,
     name: 'Localo Admin',
     tagline: 'Marketplace operations console'
   },

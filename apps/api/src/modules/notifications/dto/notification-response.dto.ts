@@ -2,56 +2,55 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { NotificationChannel, NotificationStatus } from '@prisma/client';
 
 export class NotificationResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
   @ApiProperty({ enum: NotificationChannel })
   channel!: NotificationChannel;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   title?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   body!: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional({ type: Object, additionalProperties: true })
   data!: unknown;
 
   @ApiProperty({ enum: NotificationStatus })
   status!: NotificationStatus;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isRead!: boolean;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   readAt?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   sentAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 }
 
 export class NotificationEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: NotificationResponseDto })
+  @ApiProperty({ type: () => NotificationResponseDto })
   data!: NotificationResponseDto;
 }
 
 export class NotificationListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [NotificationResponseDto] })
+  @ApiProperty({ type: () => [NotificationResponseDto] })
   data!: NotificationResponseDto[];
 }
-

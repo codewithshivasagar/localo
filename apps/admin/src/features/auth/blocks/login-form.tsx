@@ -21,7 +21,7 @@ export function LoginForm() {
   };
 
   return (
-    <form className="space-y-5" noValidate onSubmit={handleSubmit}>
+    <form className="space-y-4 sm:space-y-5" noValidate onSubmit={handleSubmit}>
       {formError ? <Alert description={formError} size="sm" variant="destructive" /> : null}
 
       <FormField error={errors.email} htmlFor="admin-email" label={ADMIN_AUTH_COPY.emailLabel} required>
@@ -29,10 +29,12 @@ export function LoginForm() {
           disabled={isSubmitting}
           error={Boolean(errors.email)}
           id="admin-email"
-          leftIcon={<span aria-hidden="true">✉</span>}
+          className="min-h-14 px-4 text-base"
+          leftIcon={<span aria-hidden="true" className="text-lg">✉</span>}
           onChange={(event) => setValues((current) => ({ ...current, email: event.target.value }))}
           placeholder="Enter your email"
           value={values.email}
+          wrapperClassName="min-h-14 rounded-localo-xl shadow-[0_1px_0_rgb(15_23_42_/_0.04)]"
         />
       </FormField>
 
@@ -41,14 +43,16 @@ export function LoginForm() {
           disabled={isSubmitting}
           error={Boolean(errors.password)}
           id="admin-password"
-          leftIcon={<span aria-hidden="true">▣</span>}
+          className="min-h-14 px-4 text-base"
+          leftIcon={<span aria-hidden="true" className="text-lg">▣</span>}
           onChange={(event) => setValues((current) => ({ ...current, password: event.target.value }))}
           placeholder="Enter your password"
           value={values.password}
+          wrapperClassName="min-h-14 rounded-localo-xl shadow-[0_1px_0_rgb(15_23_42_/_0.04)]"
         />
       </FormField>
 
-      <Button fullWidth isLoading={isSubmitting} loadingLabel={ADMIN_AUTH_COPY.loadingLabel} size="lg" type="submit">
+      <Button className="min-h-14 rounded-localo-xl text-lg shadow-[0_16px_28px_rgb(22_163_74_/_0.28)]" fullWidth isLoading={isSubmitting} loadingLabel={ADMIN_AUTH_COPY.loadingLabel} size="lg" type="submit">
         <span>{ADMIN_AUTH_COPY.submitLabel}</span>
         <span aria-hidden="true">→</span>
       </Button>

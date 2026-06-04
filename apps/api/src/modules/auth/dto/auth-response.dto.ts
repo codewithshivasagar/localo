@@ -2,28 +2,28 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserResponseDto } from '../../users/dto/user-response.dto';
 
 export class AuthTokensDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   accessToken!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   refreshToken!: string;
 }
 
 export class AuthResponseDataDto {
-  @ApiProperty({ type: UserResponseDto })
+  @ApiProperty({ type: () => UserResponseDto })
   user!: UserResponseDto;
 
-  @ApiProperty({ type: AuthTokensDto })
+  @ApiProperty({ type: () => AuthTokensDto })
   tokens!: AuthTokensDto;
 }
 
 export class AuthResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty({ example: 'Login successful' })
+  @ApiProperty({ type: String, example: 'Login successful' })
   message!: string;
 
-  @ApiProperty({ type: AuthResponseDataDto })
+  @ApiProperty({ type: () => AuthResponseDataDto })
   data!: AuthResponseDataDto;
 }

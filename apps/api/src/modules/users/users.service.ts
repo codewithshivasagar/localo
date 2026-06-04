@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Role } from '@localo/shared-types';
-import { UsersRepository, UserWithPasswordEntity } from './users.repository';
-import type { UserResponseDto } from './dto/user-response.dto';
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Role } from "@localo/shared-types";
+import { UsersRepository, UserWithPasswordEntity } from "./users.repository";
+import type { UserResponseDto } from "./dto/user-response.dto";
 
 interface UserResponseSource {
   id: string;
@@ -17,19 +17,24 @@ interface UserResponseSource {
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    @Inject(UsersRepository)
+    private readonly usersRepository: UsersRepository,
+  ) {}
 
   async findCurrentUser(id: string): Promise<UserResponseDto> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
 
     return this.toUserResponse(user);
   }
 
-  findByEmailWithPassword(email: string): Promise<UserWithPasswordEntity | null> {
+  findByEmailWithPassword(
+    email: string,
+  ): Promise<UserWithPasswordEntity | null> {
     return this.usersRepository.findByEmailWithPassword(email);
   }
 
@@ -43,7 +48,7 @@ export class UsersService {
       lastName: user.lastName,
       phone: user.phone,
       createdAt: user.createdAt.toISOString(),
-      updatedAt: user.updatedAt.toISOString()
+      updatedAt: user.updatedAt.toISOString(),
     };
   }
 }

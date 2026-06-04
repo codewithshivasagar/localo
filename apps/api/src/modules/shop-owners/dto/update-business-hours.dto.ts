@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 import { BusinessHourDto } from './business-hour.dto';
 
 export class UpdateBusinessHoursDto {
-  @ApiProperty({ type: [BusinessHourDto] })
+  @ApiProperty({ type: () => [BusinessHourDto] })
   @ArrayMinSize(1)
   @ArrayMaxSize(7)
   @ValidateNested({ each: true })

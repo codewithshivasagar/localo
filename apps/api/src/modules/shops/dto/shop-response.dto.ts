@@ -6,50 +6,50 @@ import {
 } from '@prisma/client';
 
 export class ShopOwnerSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   email!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   fullName!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   phone?: string | null;
 }
 
 export class ShopCategorySummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 }
 
 export class ShopResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ownerUserId!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   legalName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   description?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   primaryCategoryId?: string | null;
 
   @ApiProperty({ enum: ShopStatus })
@@ -61,61 +61,61 @@ export class ShopResponseDto {
   @ApiProperty({ enum: ShopCommissionStatus })
   commissionStatus!: ShopCommissionStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   phone?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   email?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   websiteUrl?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ratingAvg!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   ratingCount!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isFeatured!: boolean;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   approvedById?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   approvedAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 
-  @ApiPropertyOptional({ type: ShopOwnerSummaryDto })
+  @ApiPropertyOptional({ type: () => ShopOwnerSummaryDto })
   owner?: ShopOwnerSummaryDto;
 
-  @ApiPropertyOptional({ type: ShopCategorySummaryDto })
+  @ApiPropertyOptional({ type: () => ShopCategorySummaryDto, nullable: true })
   primaryCategory?: ShopCategorySummaryDto | null;
 }
 
 export class ShopEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: ShopResponseDto })
+  @ApiProperty({ type: () => ShopResponseDto })
   data!: ShopResponseDto;
 }
 
 export class ShopListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [ShopResponseDto] })
+  @ApiProperty({ type: () => [ShopResponseDto] })
   data!: ShopResponseDto[];
 }

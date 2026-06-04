@@ -1,70 +1,69 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class AuditLogActorResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   fullName!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   email!: string;
 }
 
 export class AuditLogResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   actorUserId?: string | null;
 
-  @ApiPropertyOptional({ type: AuditLogActorResponseDto })
+  @ApiPropertyOptional({ type: () => AuditLogActorResponseDto, nullable: true })
   actorUser?: AuditLogActorResponseDto | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   action!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   entityType!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   entityId?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: Object, additionalProperties: true })
   oldValues?: unknown;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: Object, additionalProperties: true })
   newValues?: unknown;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   ipAddress?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   userAgent?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 }
 
 export class AuditLogEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, example: 'Audit log fetched successfully' })
   message!: string;
 
-  @ApiProperty({ type: AuditLogResponseDto })
+  @ApiProperty({ type: () => AuditLogResponseDto })
   data!: AuditLogResponseDto;
 }
 
 export class AuditLogListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, example: 'Audit logs fetched successfully' })
   message!: string;
 
-  @ApiProperty({ type: [AuditLogResponseDto] })
+  @ApiProperty({ type: () => [AuditLogResponseDto] })
   data!: AuditLogResponseDto[];
 }
-

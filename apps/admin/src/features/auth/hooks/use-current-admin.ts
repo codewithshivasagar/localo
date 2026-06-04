@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authApi, localoTokenStorage, type AuthUser } from '@localo/api-client';
+import { localoTokenStorage, type AuthUser } from '@localo/api-client';
 import { AdminRoutes } from '../../../config';
-import { isAdminRole } from '../config';
+import { adminAuthApi, isAdminRole } from '../config';
 
 export type CurrentAdminStatus = 'loading' | 'authenticated';
 
@@ -29,7 +29,7 @@ export function useCurrentAdmin(): UseCurrentAdminResult {
       }
 
       try {
-        const currentUser = await authApi.me();
+        const currentUser = await adminAuthApi.me();
 
         if (!isMounted) {
           return;

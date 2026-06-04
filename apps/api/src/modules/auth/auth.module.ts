@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
@@ -8,6 +9,7 @@ import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    ConfigModule,
     PassportModule,
     JwtModule.register({}),
     UsersModule

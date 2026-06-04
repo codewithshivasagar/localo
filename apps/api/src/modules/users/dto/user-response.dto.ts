@@ -2,30 +2,30 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Role } from '@localo/shared-types';
 
 export class UserResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   email!: string;
 
-  @ApiProperty({ enum: Role })
+  @ApiProperty({ enum: Role, enumName: 'Role' })
   role!: Role;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, example: 'ACTIVE' })
   status!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   firstName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   lastName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   phone?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 }

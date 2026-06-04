@@ -2,6 +2,7 @@ import { createLocaloAssetPath } from './asset-paths';
 import type { LocaloAssetMap } from './assets.types';
 
 export type LocaloAuthAssetKey =
+  | 'logoMark'
   | 'shopIllustration'
   | 'adminDashboardIllustration'
   | 'securityShield'
@@ -12,6 +13,12 @@ export type LocaloAuthAssetKey =
   | 'commissionTrackingIcon';
 
 export const localoAuthAssets = {
+  logoMark: {
+    key: 'logoMark',
+    src: createLocaloAssetPath('auth', 'localo-logo-mark.png'),
+    alt: 'Localo logo mark',
+    category: 'auth'
+  },
   shopIllustration: {
     key: 'shopIllustration',
     src: createLocaloAssetPath('auth', 'localo-shop-illustration.png'),

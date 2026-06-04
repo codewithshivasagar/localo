@@ -2,8 +2,9 @@
 
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { authApi, localoTokenStorage } from '@localo/api-client';
+import { localoTokenStorage } from '@localo/api-client';
 import { AdminRoutes } from '../../../config';
+import { adminAuthApi } from '../config';
 
 export function useAdminLogout() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export function useAdminLogout() {
 
     try {
       if (refreshToken) {
-        await authApi.logout({ refreshToken });
+        await adminAuthApi.logout({ refreshToken });
       }
     } catch {
       // Local tokens are cleared below even when the API is unreachable.

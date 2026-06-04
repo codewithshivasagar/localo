@@ -1,89 +1,89 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CategoryMediaResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   publicUrl?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   altText?: string | null;
 }
 
 export class CategoryParentResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 }
 
 export class CategoryResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   parentId?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   description?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   level!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   sortOrder!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isActive!: boolean;
 
-  @ApiProperty()
+  @ApiPropertyOptional({ type: Object, additionalProperties: true })
   metadata!: unknown;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 
-  @ApiPropertyOptional({ type: CategoryParentResponseDto })
+  @ApiPropertyOptional({ type: () => CategoryParentResponseDto, nullable: true })
   parent?: CategoryParentResponseDto | null;
 
-  @ApiPropertyOptional({ type: CategoryMediaResponseDto })
+  @ApiPropertyOptional({ type: () => CategoryMediaResponseDto, nullable: true })
   iconMedia?: CategoryMediaResponseDto | null;
 
-  @ApiPropertyOptional({ type: CategoryMediaResponseDto })
+  @ApiPropertyOptional({ type: () => CategoryMediaResponseDto, nullable: true })
   imageMedia?: CategoryMediaResponseDto | null;
 }
 
 export class CategoryEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: CategoryResponseDto })
+  @ApiProperty({ type: () => CategoryResponseDto })
   data!: CategoryResponseDto;
 }
 
 export class CategoryListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [CategoryResponseDto] })
+  @ApiProperty({ type: () => [CategoryResponseDto] })
   data!: CategoryResponseDto[];
 }

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
@@ -11,7 +11,7 @@ import type { UserResponseDto } from './dto/user-response.dto';
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
   @Get('me')
   @ApiOperation({ summary: 'Get the authenticated user profile' })

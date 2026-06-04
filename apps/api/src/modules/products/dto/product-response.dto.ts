@@ -2,67 +2,67 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ProductStatus, ProductType } from '@prisma/client';
 
 export class ProductShopSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 }
 
 export class ProductCategorySummaryDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isPrimary!: boolean;
 }
 
 export class ProductMediaResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   mediaId!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   publicUrl?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   altText?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   sortOrder!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isPrimary!: boolean;
 }
 
 export class ProductResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   shopId!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   title!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   description?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   shortDescription?: string | null;
 
   @ApiProperty({ enum: ProductType })
@@ -71,7 +71,7 @@ export class ProductResponseDto {
   @ApiProperty({ enum: ProductStatus })
   status!: ProductStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   sku?: string | null;
 
   @ApiProperty({ type: [String] })
@@ -80,64 +80,64 @@ export class ProductResponseDto {
   @ApiProperty({ type: [String] })
   tags!: string[];
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   basePrice?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   compareAtPrice?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   currencyCode!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   taxRate!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isFeatured!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ratingAvg!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   ratingCount!: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   publishedAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 
-  @ApiPropertyOptional({ type: ProductShopSummaryDto })
+  @ApiPropertyOptional({ type: () => ProductShopSummaryDto })
   shop?: ProductShopSummaryDto;
 
-  @ApiProperty({ type: [ProductCategorySummaryDto] })
+  @ApiProperty({ type: () => [ProductCategorySummaryDto] })
   categories!: ProductCategorySummaryDto[];
 
-  @ApiProperty({ type: [ProductMediaResponseDto] })
+  @ApiProperty({ type: () => [ProductMediaResponseDto] })
   media!: ProductMediaResponseDto[];
 }
 
 export class ProductEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: ProductResponseDto })
+  @ApiProperty({ type: () => ProductResponseDto })
   data!: ProductResponseDto;
 }
 
 export class ProductListResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: [ProductResponseDto] })
+  @ApiProperty({ type: () => [ProductResponseDto] })
   data!: ProductResponseDto[];
 }

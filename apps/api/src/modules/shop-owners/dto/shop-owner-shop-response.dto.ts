@@ -6,71 +6,71 @@ import {
 } from '@prisma/client';
 
 export class ShopOwnerLocationResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   label!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   addressLine1!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   addressLine2?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   pincode?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   latitude!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   longitude!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   googlePlaceId?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isPrimary!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isServiceAreaEnabled!: boolean;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   serviceRadiusKm?: string | null;
 }
 
 export class ShopOwnerBusinessHourResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   dayOfWeek!: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   opensAt?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   closesAt?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean })
   isClosed!: boolean;
 }
 
 export class ShopOwnerShopResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   slug!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   legalName?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   description?: string | null;
 
   @ApiProperty({ enum: ShopStatus })
@@ -82,41 +82,41 @@ export class ShopOwnerShopResponseDto {
   @ApiProperty({ enum: ShopCommissionStatus })
   commissionStatus!: ShopCommissionStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   phone?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   email?: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   websiteUrl?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   ratingAvg!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   ratingCount!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   createdAt!: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   updatedAt!: string;
 
-  @ApiPropertyOptional({ type: ShopOwnerLocationResponseDto })
+  @ApiPropertyOptional({ type: () => ShopOwnerLocationResponseDto, nullable: true })
   location?: ShopOwnerLocationResponseDto | null;
 
-  @ApiProperty({ type: [ShopOwnerBusinessHourResponseDto] })
+  @ApiProperty({ type: () => [ShopOwnerBusinessHourResponseDto] })
   businessHours!: ShopOwnerBusinessHourResponseDto[];
 }
 
 export class ShopOwnerShopEnvelopeResponseDto {
-  @ApiProperty({ example: true })
-  success!: true;
+  @ApiProperty({ type: Boolean, example: true })
+  success!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   message!: string;
 
-  @ApiProperty({ type: ShopOwnerShopResponseDto })
+  @ApiProperty({ type: () => ShopOwnerShopResponseDto })
   data!: ShopOwnerShopResponseDto;
 }
