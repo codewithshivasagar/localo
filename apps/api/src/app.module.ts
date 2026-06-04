@@ -10,11 +10,13 @@ import { validateEnvironment } from './config/validation.schema';
 import { PrismaModule } from './database/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { CommissionModule } from './modules/commission/commission.module';
 import { DiscoveryModule } from './modules/discovery/discovery.module';
 import { HealthModule } from './modules/health/health.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ShopOwnersModule } from './modules/shop-owners/shop-owners.module';
 import { ShopsModule } from './modules/shops/shops.module';
+import { SupportTicketsModule } from './modules/support-tickets/support-tickets.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -34,7 +36,9 @@ import { UsersModule } from './modules/users/users.module';
     ShopOwnersModule,
     CategoriesModule,
     DiscoveryModule,
-    ProductsModule
+    ProductsModule,
+    SupportTicketsModule,
+    CommissionModule
   ],
   providers: [
     {
