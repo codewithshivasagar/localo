@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "pnpm -r --parallel dev",
+    "dev:api": "pnpm --filter @localo/api dev",
     "dev:admin": "pnpm --filter @localo/admin dev",
     "dev:partner": "pnpm --filter @localo/partner dev",
     "dev:web": "pnpm --filter @localo/web dev",
     "build": "pnpm -r build",
+    "build:api": "pnpm --filter @localo/api build",
     "typecheck": "pnpm -r typecheck",
+    "typecheck:api": "pnpm --filter @localo/api typecheck",
     "lint": "pnpm -r lint",
+    "lint:api": "pnpm --filter @localo/api lint",
     "format": "prettier --write ."
   },
   "devDependencies": {
