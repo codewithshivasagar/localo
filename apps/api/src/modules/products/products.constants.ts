@@ -1,0 +1,3 @@
+export const DEFAULT_PRODUCT_LIST_PAGE = 1;
+export const DEFAULT_PRODUCT_LIST_LIMIT = 20;
+export const MAX_PRODUCT_LIST_LIMIT = 100;

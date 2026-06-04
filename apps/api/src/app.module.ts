@@ -9,7 +9,9 @@ import { jwtConfig } from './config/jwt.config';
 import { validateEnvironment } from './config/validation.schema';
 import { PrismaModule } from './database/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CategoriesModule } from './modules/categories/categories.module';
 import { HealthModule } from './modules/health/health.module';
+import { ProductsModule } from './modules/products/products.module';
 import { ShopOwnersModule } from './modules/shop-owners/shop-owners.module';
 import { ShopsModule } from './modules/shops/shops.module';
 import { UsersModule } from './modules/users/users.module';
@@ -28,7 +30,9 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     UsersModule,
     ShopsModule,
-    ShopOwnersModule
+    ShopOwnersModule,
+    CategoriesModule,
+    ProductsModule
   ],
   providers: [
     {
