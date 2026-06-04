@@ -23,6 +23,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@localo/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@localo/assets':
         specifier: workspace:*
         version: link:../../packages/assets
@@ -38,6 +41,9 @@ importers:
       '@localo/services':
         specifier: workspace:*
         version: link:../../packages/services
+      '@localo/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       '@localo/supabase':
         specifier: workspace:*
         version: link:../../packages/supabase

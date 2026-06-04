@@ -1,4 +1,4 @@
-import { PagePlaceholderTemplate } from '../../templates';
+import { PagePlaceholderTemplate } from '../../../templates';
 
 export default function SettingsPage() {
   return (

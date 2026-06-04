@@ -1,14 +1,19 @@
+'use client';
+
 import { Badge, Button, Topbar } from '@localo/ui';
+import { useAdminLogout } from '../../features/auth';
 import { adminAppConfig } from '../../config';
 
 export function AdminTopbarTemplate() {
+  const { isLoggingOut, logout } = useAdminLogout();
+
   return (
     <Topbar
       actions={
         <>
-          <Badge variant="outline">UI-6</Badge>
-          <Button size="sm" variant="outline">
-            Account
+          <Badge variant="success">Protected</Badge>
+          <Button isLoading={isLoggingOut} loadingLabel="Signing out" onClick={() => void logout()} size="sm" variant="outline">
+            Logout
           </Button>
         </>
       }
