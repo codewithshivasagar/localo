@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, ProductStatus, ShopStatus } from '@prisma/client';
+import {
+  Prisma,
+  ProductStatus,
+  ShopStatus
+} from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import type { ProductFilterDto } from './dto/product-filter.dto';
 
@@ -51,7 +55,7 @@ export class ProductsRepository {
         skip,
         take,
         include: productInclude,
-        orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }]
+        orderBy: this.buildProductOrderBy(filters)
       })
     ]);
   }
@@ -79,7 +83,10 @@ export class ProductsRepository {
         status: ProductStatus.ACTIVE,
         shop: {
           deletedAt: null,
-          status: ShopStatus.ACTIVE
+          status: ShopStatus.ACTIVE,
+          approvedAt: {
+            not: null
+          }
         }
       },
       include: productInclude
@@ -198,6 +205,8 @@ export class ProductsRepository {
     publicOnly: boolean
   ): Prisma.ProductWhereInput {
     const tags = parseTags(filters.tags);
+    const minPrice = filters.priceMin ?? filters.minPrice;
+    const maxPrice = filters.priceMax ?? filters.maxPrice;
     const status = publicOnly
       ? ProductStatus.ACTIVE
       : filters.visibility ?? filters.status;
@@ -209,7 +218,10 @@ export class ProductsRepository {
       shop: publicOnly
         ? {
             deletedAt: null,
-            status: ShopStatus.ACTIVE
+            status: ShopStatus.ACTIVE,
+            approvedAt: {
+              not: null
+            }
           }
         : undefined,
       categoryLinks: filters.categoryId
@@ -220,16 +232,10 @@ export class ProductsRepository {
           }
         : undefined,
       basePrice:
-        filters.minPrice !== undefined || filters.maxPrice !== undefined
+        minPrice !== undefined || maxPrice !== undefined
           ? {
-              gte:
-                filters.minPrice === undefined
-                  ? undefined
-                  : new Prisma.Decimal(filters.minPrice),
-              lte:
-                filters.maxPrice === undefined
-                  ? undefined
-                  : new Prisma.Decimal(filters.maxPrice)
+              gte: minPrice === undefined ? undefined : new Prisma.Decimal(minPrice),
+              lte: maxPrice === undefined ? undefined : new Prisma.Decimal(maxPrice)
             }
           : undefined,
       compareAtPrice:
@@ -256,6 +262,26 @@ export class ProductsRepository {
           ]
         : undefined
     };
+  }
+
+  private buildProductOrderBy(
+    filters: ProductFilterDto
+  ): Prisma.ProductOrderByWithRelationInput[] {
+    const sortOrder = filters.sortOrder ?? 'desc';
+
+    switch (filters.sortBy) {
+      case 'price':
+        return [{ basePrice: sortOrder }, { createdAt: 'desc' }];
+      case 'rating':
+        return [{ ratingAvg: sortOrder }, { ratingCount: 'desc' }];
+      case 'title':
+        return [{ title: sortOrder }];
+      case 'newest':
+        return [{ createdAt: sortOrder }];
+      case 'featured':
+      default:
+        return [{ isFeatured: 'desc' }, { createdAt: 'desc' }];
+    }
   }
 }
 

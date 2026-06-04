@@ -21,6 +21,7 @@ export class ProductsService {
   async listPublic(
     filters: ProductFilterDto
   ): Promise<PaginationResponse<ProductResponseDto>> {
+    this.ensurePublicProductStatus(filters);
     this.validatePriceFilter(filters);
 
     const page = filters.page;
@@ -291,12 +292,23 @@ export class ProductsService {
   }
 
   private validatePriceFilter(filters: ProductFilterDto) {
+    const minPrice = filters.priceMin ?? filters.minPrice;
+    const maxPrice = filters.priceMax ?? filters.maxPrice;
+
     if (
-      filters.minPrice !== undefined &&
-      filters.maxPrice !== undefined &&
-      filters.minPrice > filters.maxPrice
+      minPrice !== undefined &&
+      maxPrice !== undefined &&
+      minPrice > maxPrice
     ) {
-      throw new BadRequestException('minPrice cannot be greater than maxPrice');
+      throw new BadRequestException('priceMin cannot be greater than priceMax');
+    }
+  }
+
+  private ensurePublicProductStatus(filters: ProductFilterDto) {
+    const status = filters.visibility ?? filters.status;
+
+    if (status && status !== ProductStatus.ACTIVE) {
+      throw new BadRequestException('Public discovery only supports ACTIVE products');
     }
   }
 

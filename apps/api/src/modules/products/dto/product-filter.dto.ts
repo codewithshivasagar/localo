@@ -3,6 +3,7 @@ import { ProductStatus } from '@prisma/client';
 import {
   IsBoolean,
   IsEnum,
+  IsIn,
   IsInt,
   IsNumber,
   IsOptional,
@@ -16,6 +17,9 @@ import {
   DEFAULT_PRODUCT_LIST_PAGE,
   MAX_PRODUCT_LIST_LIMIT
 } from '../products.constants';
+
+const PRODUCT_SORT_FIELDS = ['featured', 'price', 'rating', 'title', 'newest'] as const;
+const SORT_ORDERS = ['asc', 'desc'] as const;
 
 export class ProductFilterDto {
   @ApiPropertyOptional()
@@ -49,11 +53,23 @@ export class ProductFilterDto {
   @Min(0)
   minPrice?: number;
 
+  @ApiPropertyOptional({ description: 'Alias for minPrice used by discovery APIs.' })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  priceMin?: number;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   @Min(0)
   maxPrice?: number;
+
+  @ApiPropertyOptional({ description: 'Alias for maxPrice used by discovery APIs.' })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  priceMax?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -66,6 +82,16 @@ export class ProductFilterDto {
   @IsOptional()
   @IsString()
   tags?: string;
+
+  @ApiPropertyOptional({ enum: PRODUCT_SORT_FIELDS, default: 'featured' })
+  @IsOptional()
+  @IsIn(PRODUCT_SORT_FIELDS)
+  sortBy?: (typeof PRODUCT_SORT_FIELDS)[number];
+
+  @ApiPropertyOptional({ enum: SORT_ORDERS, default: 'desc' })
+  @IsOptional()
+  @IsIn(SORT_ORDERS)
+  sortOrder?: (typeof SORT_ORDERS)[number];
 
   @ApiPropertyOptional({ default: DEFAULT_PRODUCT_LIST_PAGE })
   @IsOptional()
