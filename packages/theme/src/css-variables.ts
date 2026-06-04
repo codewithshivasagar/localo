@@ -10,7 +10,14 @@ export const localoCssVariableNames = {
   text: "--localo-color-text",
   textMuted: "--localo-color-text-muted",
   border: "--localo-color-border",
+  panel: "--localo-color-panel",
+  panelForeground: "--localo-color-panel-foreground",
+  accent: "--localo-color-accent",
+  accentForeground: "--localo-color-accent-foreground",
+  highlight: "--localo-color-highlight",
+  highlightForeground: "--localo-color-highlight-foreground",
   radiusMd: "--localo-radius-md",
+  radiusXl: "--localo-radius-xl",
   shadowMd: "--localo-shadow-md"
 } as const;
 
@@ -23,7 +30,14 @@ export const createLocaloCssVariables = (theme: LocaloTheme = localoBaseTheme) =
   [localoCssVariableNames.text]: theme.colors.text,
   [localoCssVariableNames.textMuted]: theme.colors.textMuted,
   [localoCssVariableNames.border]: theme.colors.border,
+  [localoCssVariableNames.panel]: theme.colors.panel,
+  [localoCssVariableNames.panelForeground]: theme.colors.panelForeground,
+  [localoCssVariableNames.accent]: theme.colors.accent,
+  [localoCssVariableNames.accentForeground]: theme.colors.accentForeground,
+  [localoCssVariableNames.highlight]: theme.colors.highlight,
+  [localoCssVariableNames.highlightForeground]: theme.colors.highlightForeground,
   [localoCssVariableNames.radiusMd]: theme.radius.md,
+  [localoCssVariableNames.radiusXl]: theme.radius.xl,
   [localoCssVariableNames.shadowMd]: theme.shadows.md
 });
 

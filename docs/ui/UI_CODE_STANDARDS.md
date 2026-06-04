@@ -282,6 +282,20 @@ for components.
 
 Do not hardcode random colors.
 
+All shared components and app screens must use the finalized Localo brand tokens from `packages/theme`.
+
+Finalized UI-5 brand tokens:
+
+```txt
+Primary Green: #16A34A
+Teal: #0D9488
+Deep Navy: #0F172A
+Amber: #F59E0B
+Light Gray: #F2F4F7
+Charcoal: #111827
+Typography: Poppins
+```
+
 Bad:
 
 ```tsx

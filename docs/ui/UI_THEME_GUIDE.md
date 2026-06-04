@@ -8,6 +8,35 @@ Localo should use one shared base theme by default, with flexibility to override
 
 ---
 
+## Finalized Brand Tokens
+
+UI-5 locks the Localo brand foundation to these values:
+
+```txt
+Primary Green: #16A34A
+Teal: #0D9488
+Deep Navy: #0F172A
+Amber: #F59E0B
+Light Gray: #F2F4F7
+Charcoal: #111827
+Typography: Poppins
+```
+
+These tokens support the Admin Login reference direction:
+
+```txt
+Deep navy brand/auth panel
+Green primary CTA
+White/surface login card
+Light gray page background
+Charcoal primary text
+Teal and amber accents
+```
+
+Do not introduce one-off brand colors in app screens or feature components. Add missing semantic tokens to `packages/theme` first.
+
+---
+
 ## Theme Package
 
 Theme code lives in:
@@ -84,38 +113,50 @@ export const localoBaseTheme = {
     text: '',
     textMuted: '',
     border: '',
+    panel: '',
+    panelForeground: '',
+    accent: '',
+    accentForeground: '',
+    highlight: '',
+    highlightForeground: '',
     success: '',
     warning: '',
     danger: '',
     info: '',
   },
   typography: {
-    fontSans: '',
+    fontSans: 'Poppins, ...',
+    fontMono: '',
+    displayWeight: '',
     headingWeight: '',
     bodyWeight: '',
+    labelWeight: '',
   },
   spacing: {
     pageX: '',
     pageY: '',
     sectionY: '',
     cardPadding: '',
+    authPanelPadding: '',
   },
   radius: {
     sm: '',
     md: '',
     lg: '',
     xl: '',
+    2xl: '',
     full: '',
   },
   shadows: {
     sm: '',
     md: '',
     lg: '',
+    authCard: '',
   },
 };
 ```
 
-Exact values can be finalized in UI-2.
+Exact brand values are finalized in UI-5.
 
 ---
 
@@ -211,6 +252,16 @@ statusInfo
 
 Business status badges should be built inside feature folders later.
 
+Status tokens should map back to the finalized Localo brand palette where practical:
+
+```txt
+active/success → Primary Green
+approved/info → Teal
+pending/warning → Amber
+archived/panel accents → Deep Navy
+rejected/danger → Red danger token
+```
+
 ---
 
 ## Tailwind Preset
@@ -274,6 +325,19 @@ Better:
 ```
 
 or approved token class.
+
+For Localo brand surfaces, prefer:
+
+```txt
+localo-primary
+localo-panel
+localo-accent
+localo-highlight
+localo-background
+localo-surface
+localo-text
+localo-text-muted
+```
 
 ---
 

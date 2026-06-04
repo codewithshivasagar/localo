@@ -18,9 +18,13 @@ UI-1: Foundation Packages
 UI-2: Theme Setup
 UI-3: API Client Foundation
 UI-4: Shared UI Components
+UI-5: Brand Theme Sync
+UI-5.5: Shared UI Primitive UX Alignment
+UI-6: Admin App Shell
+UI-7: Admin Auth/Login
 ```
 
-Do not start Admin screens until UI-0 to UI-4 are complete and reviewed.
+Do not start business Admin screens until UI-0 to UI-7 foundation/auth work is complete and reviewed.
 
 ---
 
@@ -423,6 +427,143 @@ Requirements:
 - Run relevant typecheck only.
 
 At the end, summarize completed work, files changed, commands run, checks, assumptions, and pending items.
+```
+
+---
+
+# UI-5: Brand Theme Sync
+
+## Goal
+
+Sync the theme package and UI docs with the finalized Localo brand identity.
+
+## Brand Source Of Truth
+
+```txt
+Primary Green: #16A34A
+Teal: #0D9488
+Deep Navy: #0F172A
+Amber: #F59E0B
+Light Gray: #F2F4F7
+Charcoal: #111827
+Typography: Poppins
+```
+
+## Work
+
+```txt
+Update packages/theme tokens
+Preserve base/admin/shopOwner/publicWeb theme exports
+Preserve CSS variable helper
+Preserve Tailwind preset foundation
+Update UI theme/code/implementation docs
+Use admin login references as visual direction
+```
+
+## Rules
+
+```txt
+No Admin login screen
+No routes/pages/templates
+No business components
+No backend changes
+No API client behavior changes
+No dependency installs
+```
+
+## Acceptance Checklist
+
+```txt
+Theme colors match finalized brand tokens
+Poppins remains the typography default
+Theme supports deep navy auth panel, green CTA, white card, light gray background
+Docs mention UI-5, UI-5.5, UI-6, and UI-7
+Typecheck passes
+```
+
+---
+
+# UI-5.5: Shared UI Primitive UX Alignment
+
+## Goal
+
+Review and align generic shared UI primitives against the finalized Localo theme and admin auth design direction.
+
+## Work
+
+```txt
+Tune Button/Input/Card/FormField/Dialog UX if needed
+Improve focus, disabled, error, and mobile touch states
+Keep components generic
+Keep variants semantic
+```
+
+## Rules
+
+```txt
+No business components
+No app screens
+No hardcoded feature labels
+No React Query hooks
+No API changes
+```
+
+---
+
+# UI-6: Admin App Shell
+
+## Goal
+
+Create the generic Admin app shell foundation.
+
+## Work
+
+```txt
+Admin shell layout
+Protected layout placeholder
+Topbar/sidebar composition using @localo/ui primitives
+Route constants where needed
+No business pages yet
+```
+
+## Rules
+
+```txt
+No shop/category/product/support screens yet
+No deep business workflows
+Use @localo/ui, @localo/theme, and @localo/assets
+```
+
+---
+
+# UI-7: Admin Auth/Login
+
+## Goal
+
+Implement Admin auth/login using the finalized brand theme and existing backend auth APIs.
+
+## Work
+
+```txt
+Login route
+Login template and blocks
+Login form validation
+Auth guard/redirect flow
+Current admin handling
+Unauthorized state
+Logout flow if needed
+```
+
+## Rules
+
+```txt
+Use @localo/api-client for auth calls
+Use @localo/ui primitives
+Use @localo/theme tokens
+Use @localo/assets image references
+Do not call fetch directly
+Do not add forgot password, signup, OTP, magic link, or social login yet
+Do not implement Admin business modules
 ```
 
 ---

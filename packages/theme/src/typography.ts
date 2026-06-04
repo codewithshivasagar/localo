@@ -4,6 +4,7 @@ export const localoTypography = {
   fontMono:
     "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
   headingWeight: "700",
+  displayWeight: "800",
   bodyWeight: "400",
   labelWeight: "600",
   lineHeightTight: "1.15",

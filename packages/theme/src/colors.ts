@@ -1,31 +1,48 @@
+export const localoBrandColors = {
+  primaryGreen: "#16A34A",
+  teal: "#0D9488",
+  deepNavy: "#0F172A",
+  amber: "#F59E0B",
+  lightGray: "#F2F4F7",
+  charcoal: "#111827",
+  white: "#FFFFFF"
+} as const;
+
 export const localoSemanticColors = {
-  primary: "#168A53",
-  primaryForeground: "#FFFFFF",
-  background: "#F7F4EC",
-  surface: "#FFFFFF",
-  surfaceMuted: "#EEE8DA",
-  text: "#17211B",
-  textMuted: "#647067",
-  border: "#DDD5C5",
-  success: "#168A53",
-  warning: "#B7791F",
-  danger: "#B42318",
-  info: "#2563A7"
+  primary: localoBrandColors.primaryGreen,
+  primaryForeground: localoBrandColors.white,
+  background: localoBrandColors.lightGray,
+  surface: localoBrandColors.white,
+  surfaceMuted: "#E5E7EB",
+  text: localoBrandColors.charcoal,
+  textMuted: "#667085",
+  border: "#D0D5DD",
+  panel: localoBrandColors.deepNavy,
+  panelForeground: "#F8FAFC",
+  accent: localoBrandColors.teal,
+  accentForeground: localoBrandColors.white,
+  highlight: localoBrandColors.amber,
+  highlightForeground: localoBrandColors.charcoal,
+  success: localoBrandColors.primaryGreen,
+  warning: localoBrandColors.amber,
+  danger: "#DC2626",
+  info: localoBrandColors.teal
 } as const;
 
 export const localoStatusColors = {
-  active: "#168A53",
-  pending: "#B7791F",
-  approved: "#0F766E",
-  rejected: "#B42318",
-  paused: "#6B7280",
-  draft: "#647067",
-  archived: "#475569",
+  active: localoBrandColors.primaryGreen,
+  pending: localoBrandColors.amber,
+  approved: localoBrandColors.teal,
+  rejected: localoSemanticColors.danger,
+  paused: "#64748B",
+  draft: "#667085",
+  archived: localoBrandColors.deepNavy,
   success: localoSemanticColors.success,
   warning: localoSemanticColors.warning,
   danger: localoSemanticColors.danger,
   info: localoSemanticColors.info
 } as const;
 
+export type LocaloBrandColors = typeof localoBrandColors;
 export type LocaloSemanticColors = typeof localoSemanticColors;
 export type LocaloStatusColors = typeof localoStatusColors;

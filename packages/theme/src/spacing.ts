@@ -12,7 +12,8 @@ export const localoSpacing = {
   pageX: "clamp(1rem, 3vw, 2rem)",
   pageY: "clamp(1.25rem, 4vw, 3rem)",
   sectionY: "clamp(2rem, 6vw, 5rem)",
-  cardPadding: "1.25rem"
+  cardPadding: "clamp(1.25rem, 3vw, 2rem)",
+  authPanelPadding: "clamp(2rem, 5vw, 4rem)"
 } as const;
 
 export type LocaloSpacing = typeof localoSpacing;
