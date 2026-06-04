@@ -7,6 +7,7 @@ import {
 import { Prisma, ShopStatus, UserRole } from '@prisma/client';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
+import { AuditLogsService } from '../audit-logs/audit-logs.service';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { ShopFilterDto } from './dto/shop-filter.dto';
 import { ShopResponseDto } from './dto/shop-response.dto';
@@ -17,7 +18,10 @@ import { ShopsRepository, type ShopWithRelations } from './shops.repository';
 
 @Injectable()
 export class ShopsService {
-  constructor(private readonly shopsRepository: ShopsRepository) {}
+  constructor(
+    private readonly shopsRepository: ShopsRepository,
+    private readonly auditLogsService: AuditLogsService
+  ) {}
 
   async list(filters: ShopFilterDto): Promise<PaginationResponse<ShopResponseDto>> {
     const page = filters.page;
@@ -252,13 +256,13 @@ export class ShopsService {
     oldValues: unknown,
     newValues: unknown
   ) {
-    await this.shopsRepository.createAuditLog({
-      actorUser: { connect: { id: actorUserId } },
+    await this.auditLogsService.recordSafe({
+      actorUserId,
       action,
       entityType: 'shops',
       entityId,
-      oldValues: oldValues === null ? undefined : toJsonValue(oldValues),
-      newValues: toJsonValue(newValues)
+      oldValues: oldValues === null ? undefined : oldValues,
+      newValues
     });
   }
 }
@@ -269,6 +273,3 @@ const slugify = (value: string) =>
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-
-const toJsonValue = (value: unknown): Prisma.InputJsonValue =>
-  JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;

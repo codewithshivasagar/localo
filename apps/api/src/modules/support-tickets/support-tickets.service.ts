@@ -8,6 +8,7 @@ import { SupportTicketStatus } from '@prisma/client';
 import { Role } from '@localo/shared-types';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
+import { AuditLogsService } from '../audit-logs/audit-logs.service';
 import { CreateSupportTicketMessageDto } from './dto/create-support-ticket-message.dto';
 import { CreateSupportTicketDto } from './dto/create-support-ticket.dto';
 import { SupportTicketFilterDto } from './dto/support-ticket-filter.dto';
@@ -20,7 +21,10 @@ import {
 
 @Injectable()
 export class SupportTicketsService {
-  constructor(private readonly supportTicketsRepository: SupportTicketsRepository) {}
+  constructor(
+    private readonly supportTicketsRepository: SupportTicketsRepository,
+    private readonly auditLogsService: AuditLogsService
+  ) {}
 
   async create(
     user: AuthenticatedUser,
@@ -133,9 +137,10 @@ export class SupportTicketsService {
 
   async updateStatus(
     ticketId: string,
-    dto: UpdateSupportTicketStatusDto
+    dto: UpdateSupportTicketStatusDto,
+    actor?: AuthenticatedUser
   ): Promise<SupportTicketResponseDto> {
-    await this.getTicketOrThrow(ticketId);
+    const existingTicket = await this.getTicketOrThrow(ticketId);
 
     if (dto.assignedToId) {
       const assignedUser = await this.supportTicketsRepository.findAssignedUser(
@@ -153,7 +158,17 @@ export class SupportTicketsService {
       assignedToId: dto.assignedToId
     });
 
-    return this.toTicketResponse(ticket, true);
+    const response = this.toTicketResponse(ticket, true);
+    await this.auditLogsService.recordSafe({
+      actorUserId: actor?.id,
+      action: 'support_tickets.status_updated',
+      entityType: 'support_tickets',
+      entityId: ticketId,
+      oldValues: this.toTicketResponse(existingTicket, true),
+      newValues: response
+    });
+
+    return response;
   }
 
   private async ensureCanReferenceShop(user: AuthenticatedUser, shopId?: string) {

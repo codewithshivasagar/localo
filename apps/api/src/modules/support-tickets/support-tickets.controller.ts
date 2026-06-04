@@ -141,9 +141,10 @@ export class AdminSupportTicketsController {
   @ApiOkResponse({ type: SupportTicketEnvelopeResponseDto })
   async updateStatus(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UpdateSupportTicketStatusDto
+    @Body() dto: UpdateSupportTicketStatusDto,
+    @CurrentUser() user: AuthenticatedUser
   ): Promise<ApiResponse<SupportTicketResponseDto>> {
-    const ticket = await this.supportTicketsService.updateStatus(id, dto);
+    const ticket = await this.supportTicketsService.updateStatus(id, dto, user);
 
     return {
       success: true,
@@ -152,4 +153,3 @@ export class AdminSupportTicketsController {
     };
   }
 }
-

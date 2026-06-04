@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InvoiceStatus, Prisma } from '@prisma/client';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
+import { AuditLogsService } from '../audit-logs/audit-logs.service';
 import {
   CommissionRepository,
   type CommissionLedgerItemWithRelations,
@@ -21,7 +22,10 @@ import { UpdateCommissionSettingDto } from './dto/update-commission-setting.dto'
 
 @Injectable()
 export class CommissionService {
-  constructor(private readonly commissionRepository: CommissionRepository) {}
+  constructor(
+    private readonly commissionRepository: CommissionRepository,
+    private readonly auditLogsService: AuditLogsService
+  ) {}
 
   async listSettings(
     filters: CommissionSettingFilterDto
@@ -48,7 +52,10 @@ export class CommissionService {
     };
   }
 
-  async updateSetting(dto: UpdateCommissionSettingDto): Promise<CommissionSettingResponseDto> {
+  async updateSetting(
+    dto: UpdateCommissionSettingDto,
+    actor?: AuthenticatedUser
+  ): Promise<CommissionSettingResponseDto> {
     const shop = await this.commissionRepository.findShop(dto.shopId);
 
     if (!shop) {
@@ -97,7 +104,17 @@ export class CommissionService {
       }
     });
 
-    return toCommissionSettingResponse(setting);
+    const response = toCommissionSettingResponse(setting);
+    await this.auditLogsService.recordSafe({
+      actorUserId: actor?.id,
+      action: 'commission_settings.updated',
+      entityType: 'shop_commission_settings',
+      entityId: setting.id,
+      oldValues: existingSetting ? toCommissionSettingResponse(existingSetting) : null,
+      newValues: response
+    });
+
+    return response;
   }
 
   async listLedger(

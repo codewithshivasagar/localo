@@ -42,9 +42,10 @@ export class AdminCommissionController {
   @ApiOperation({ summary: 'Create or update a shop commission setting' })
   @ApiOkResponse({ type: CommissionSettingEnvelopeResponseDto })
   async updateSetting(
-    @Body() dto: UpdateCommissionSettingDto
+    @Body() dto: UpdateCommissionSettingDto,
+    @CurrentUser() user: AuthenticatedUser
   ): Promise<ApiResponse<CommissionSettingResponseDto>> {
-    const setting = await this.commissionService.updateSetting(dto);
+    const setting = await this.commissionService.updateSetting(dto, user);
 
     return {
       success: true,
@@ -95,4 +96,3 @@ export class ShopOwnerCommissionController {
     return this.commissionService.listOwnerLedger(user, filters);
   }
 }
-

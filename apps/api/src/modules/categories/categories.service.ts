@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
+import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
+import { AuditLogsService } from '../audit-logs/audit-logs.service';
 import { CategoriesRepository, type CategoryWithRelations } from './categories.repository';
 import { CategoryFilterDto } from './dto/category-filter.dto';
 import { CategoryResponseDto } from './dto/category-response.dto';
@@ -14,7 +16,10 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
-  constructor(private readonly categoriesRepository: CategoriesRepository) {}
+  constructor(
+    private readonly categoriesRepository: CategoriesRepository,
+    private readonly auditLogsService: AuditLogsService
+  ) {}
 
   async listPublic(
     filters: CategoryFilterDto
@@ -47,7 +52,10 @@ export class CategoriesService {
     return this.toCategoryResponse(category);
   }
 
-  async create(dto: CreateCategoryDto): Promise<CategoryResponseDto> {
+  async create(
+    dto: CreateCategoryDto,
+    actor?: AuthenticatedUser
+  ): Promise<CategoryResponseDto> {
     const parent = dto.parentId
       ? await this.getCategoryOrThrow(dto.parentId, false)
       : null;
@@ -67,10 +75,23 @@ export class CategoriesService {
       metadata: toJsonValue(dto.metadata ?? {})
     });
 
-    return this.toCategoryResponse(category);
+    const response = this.toCategoryResponse(category);
+    await this.auditLogsService.recordSafe({
+      actorUserId: actor?.id,
+      action: 'categories.created',
+      entityType: 'categories',
+      entityId: category.id,
+      newValues: response
+    });
+
+    return response;
   }
 
-  async update(id: string, dto: UpdateCategoryDto): Promise<CategoryResponseDto> {
+  async update(
+    id: string,
+    dto: UpdateCategoryDto,
+    actor?: AuthenticatedUser
+  ): Promise<CategoryResponseDto> {
     const existingCategory = await this.getCategoryOrThrow(id, false);
     const parent = await this.resolveParent(id, dto.parentId);
     const parentId = dto.parentId === undefined ? existingCategory.parentId : dto.parentId;
@@ -108,16 +129,36 @@ export class CategoriesService {
     };
 
     const category = await this.categoriesRepository.update(id, data);
-    return this.toCategoryResponse(category);
+    const response = this.toCategoryResponse(category);
+    await this.auditLogsService.recordSafe({
+      actorUserId: actor?.id,
+      action: 'categories.updated',
+      entityType: 'categories',
+      entityId: id,
+      oldValues: this.toCategoryResponse(existingCategory),
+      newValues: response
+    });
+
+    return response;
   }
 
-  async deactivate(id: string): Promise<CategoryResponseDto> {
-    await this.getCategoryOrThrow(id, false);
+  async deactivate(id: string, actor?: AuthenticatedUser): Promise<CategoryResponseDto> {
+    const existingCategory = await this.getCategoryOrThrow(id, false);
     const category = await this.categoriesRepository.update(id, {
       isActive: false
     });
 
-    return this.toCategoryResponse(category);
+    const response = this.toCategoryResponse(category);
+    await this.auditLogsService.recordSafe({
+      actorUserId: actor?.id,
+      action: 'categories.deactivated',
+      entityType: 'categories',
+      entityId: id,
+      oldValues: this.toCategoryResponse(existingCategory),
+      newValues: response
+    });
+
+    return response;
   }
 
   private async resolveParent(id: string, parentId?: string) {

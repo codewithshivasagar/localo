@@ -17,10 +17,12 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Role } from '@localo/shared-types';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { ApiResponse } from '../../common/responses/api-response.type';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
+import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { CategoriesService } from './categories.service';
 import { CategoryFilterDto } from './dto/category-filter.dto';
 import {
@@ -68,9 +70,10 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Create a category as an admin' })
   @ApiCreatedResponse({ type: CategoryEnvelopeResponseDto })
   async create(
-    @Body() dto: CreateCategoryDto
+    @Body() dto: CreateCategoryDto,
+    @CurrentUser() user: AuthenticatedUser
   ): Promise<ApiResponse<CategoryResponseDto>> {
-    const category = await this.categoriesService.create(dto);
+    const category = await this.categoriesService.create(dto, user);
 
     return {
       success: true,
@@ -86,9 +89,10 @@ export class CategoriesController {
   @ApiOkResponse({ type: CategoryEnvelopeResponseDto })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UpdateCategoryDto
+    @Body() dto: UpdateCategoryDto,
+    @CurrentUser() user: AuthenticatedUser
   ): Promise<ApiResponse<CategoryResponseDto>> {
-    const category = await this.categoriesService.update(id, dto);
+    const category = await this.categoriesService.update(id, dto, user);
 
     return {
       success: true,
@@ -103,9 +107,10 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Deactivate a category as an admin' })
   @ApiOkResponse({ type: CategoryEnvelopeResponseDto })
   async deactivate(
-    @Param('id', ParseUUIDPipe) id: string
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthenticatedUser
   ): Promise<ApiResponse<CategoryResponseDto>> {
-    const category = await this.categoriesService.deactivate(id);
+    const category = await this.categoriesService.deactivate(id, user);
 
     return {
       success: true,
