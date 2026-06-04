@@ -1,0 +1,1 @@
+-- Localo seed data placeholder

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@localo/ui": ["packages/ui/src/index.ts"],
+      "@localo/theme": ["packages/theme/src/index.ts"],
+      "@localo/types": ["packages/types/src/index.ts"],
+      "@localo/constants": ["packages/constants/src/index.ts"],
+      "@localo/domain": ["packages/domain/src/index.ts"],
+      "@localo/services": ["packages/services/src/index.ts"],
+      "@localo/utils": ["packages/utils/src/index.ts"],
+      "@localo/validation": ["packages/validation/src/index.ts"],
+      "@localo/permissions": ["packages/permissions/src/index.ts"],
+      "@localo/supabase": ["packages/supabase/src/index.ts"]
+    }
+  }
+}
