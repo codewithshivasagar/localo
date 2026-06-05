@@ -23,6 +23,7 @@ import {
   type CategoryFormState
 } from '../schemas';
 import { useAdminCategoryDetail, useCategoryParentOptions } from '../hooks';
+import { useCategoryVisualMedia } from '../hooks';
 import { CategoryFormActions } from '../blocks/category-form-actions';
 import { CategoryFormCard } from '../blocks/category-form-card';
 import { CategoryGuidelinesCard } from '../blocks/category-guidelines-card';
@@ -88,6 +89,10 @@ export function CategoryFormTemplate({ categoryId, isEditMode }: CategoryFormTem
     () => parentOptions.find((item) => item.id === form.parentId)?.name,
     [form.parentId, parentOptions]
   );
+  const selectedVisualMediaId = form.visualMode === 'media'
+    ? form.imageMediaId || category?.imageMedia?.id || category?.iconMedia?.id || undefined
+    : form.imageMediaId || category?.imageMedia?.id || category?.iconMedia?.id || undefined;
+  const visualMediaState = useCategoryVisualMedia(selectedVisualMediaId);
 
   async function submit() {
     if (!isCategoryFormValid(form)) {
@@ -101,7 +106,7 @@ export function CategoryFormTemplate({ categoryId, isEditMode }: CategoryFormTem
     const payload = {
       description: form.description || undefined,
       iconMediaId: form.iconMediaId || undefined,
-      imageMediaId: form.imageMediaId || undefined,
+      imageMediaId: form.visualMode === 'media' ? form.imageMediaId || undefined : undefined,
       isActive: form.isActive,
       name: form.name.trim(),
       parentId: form.parentId || undefined,
@@ -181,10 +186,12 @@ export function CategoryFormTemplate({ categoryId, isEditMode }: CategoryFormTem
               <Alert description="Refreshing category details." title="Updating..." variant="info" />
             ) : null}
             <CategoryFormCard
+              category={category}
               form={form}
               isLoadingParentOptions={isLoadingParentOptions}
               onUpdateField={updateField}
               parentCategories={parentOptions}
+              visualMediaState={visualMediaState}
             />
             <div className="rounded-localo-2xl border border-localo-border bg-localo-surface p-5 shadow-localo-sm">
               <CategoryFormActions
@@ -197,7 +204,12 @@ export function CategoryFormTemplate({ categoryId, isEditMode }: CategoryFormTem
           </div>
 
           <div className="space-y-4">
-            <CategoryPreviewCard category={category} form={form} parentCategoryLabel={parentCategoryLabel} />
+            <CategoryPreviewCard
+              category={category}
+              form={form}
+              parentCategoryLabel={parentCategoryLabel}
+              visualMedia={visualMediaState.selectedMedia}
+            />
             <CategoryStatusCard form={form} parentCategoryLabel={parentCategoryLabel} />
             <CategoryGuidelinesCard />
           </div>

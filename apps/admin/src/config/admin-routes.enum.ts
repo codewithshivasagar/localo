@@ -5,6 +5,7 @@ export enum AdminRoutes {
   Dashboard = '/dashboard',
   Shops = '/shops',
   Categories = '/categories',
+  Media = '/media',
   SupportTickets = '/support-tickets',
   Commission = '/commission',
   AuditLogs = '/audit-logs',

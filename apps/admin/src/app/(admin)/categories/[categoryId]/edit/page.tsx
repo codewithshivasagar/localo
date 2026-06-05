@@ -1,12 +1,13 @@
 import { CategoryFormTemplate } from '../../../../../features/categories';
 
 interface EditCategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
-  };
+  }>;
 }
 
-export default function EditCategoryPage({ params }: EditCategoryPageProps) {
-  return <CategoryFormTemplate categoryId={params.categoryId} isEditMode />;
-}
+export default async function EditCategoryPage({ params }: EditCategoryPageProps) {
+  const { categoryId } = await params;
 
+  return <CategoryFormTemplate categoryId={categoryId} isEditMode />;
+}

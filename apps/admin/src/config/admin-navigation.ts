@@ -27,6 +27,12 @@ export const adminNavigationItems = [
     shortLabel: 'CA'
   },
   {
+    description: 'Reusable media assets and category visuals',
+    href: AdminRoutes.Media,
+    label: 'Media',
+    shortLabel: 'ME'
+  },
+  {
     description: 'Customer and shop-owner support queue',
     href: AdminRoutes.SupportTickets,
     label: 'Support Tickets',

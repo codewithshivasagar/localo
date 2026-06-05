@@ -14,6 +14,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { CommissionModule } from './modules/commission/commission.module';
 import { DiscoveryModule } from './modules/discovery/discovery.module';
 import { HealthModule } from './modules/health/health.module';
+import { MediaModule } from './modules/media/media.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ShopOwnersModule } from './modules/shop-owners/shop-owners.module';
@@ -39,6 +40,7 @@ import { UsersModule } from './modules/users/users.module';
     ShopOwnersModule,
     CategoriesModule,
     DiscoveryModule,
+    MediaModule,
     ProductsModule,
     SupportTicketsModule,
     CommissionModule,

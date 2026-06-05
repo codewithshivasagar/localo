@@ -1,17 +1,22 @@
 import { Card, Icon } from '@localo/ui';
 import type { CategoryResponse } from '@localo/api-client';
+import type { MediaResponse } from '@localo/api-client';
 import type { CategoryFormState } from '../schemas';
 
 interface CategoryPreviewCardProps {
   category?: CategoryResponse | null;
   form: CategoryFormState;
   parentCategoryLabel?: string;
+  visualMedia?: MediaResponse | null;
 }
 
-export function CategoryPreviewCard({ category, form, parentCategoryLabel }: CategoryPreviewCardProps) {
+export function CategoryPreviewCard({ category, form, parentCategoryLabel, visualMedia }: CategoryPreviewCardProps) {
   const slugPath = form.slug ? `/categories/${form.slug}` : '/categories/category-slug';
-  const visualUrl = category?.iconMedia?.publicUrl ?? category?.imageMedia?.publicUrl ?? null;
-  const visualAlt = category?.iconMedia?.altText ?? category?.imageMedia?.altText ?? form.name ?? 'Category visual';
+  const selectedIcon = form.visualIconName;
+  const previewMedia = visualMedia ?? category?.imageMedia ?? category?.iconMedia ?? null;
+  const visualUrl = form.visualMode === 'media' ? previewMedia?.publicUrl ?? null : null;
+  const visualAlt = previewMedia?.altText ?? form.name ?? 'Category visual';
+  const fallbackIcon = form.visualMode === 'media' ? 'categories' : selectedIcon;
 
   return (
     <Card className="space-y-4">
@@ -21,7 +26,7 @@ export function CategoryPreviewCard({ category, form, parentCategoryLabel }: Cat
             <img alt={visualAlt} className="h-full w-full object-cover" src={visualUrl} />
           </span>
         ) : (
-          <Icon bg="primary" name="categories" shape="circle" tone="white" wrapperSize={44} />
+          <Icon bg="primary" name={fallbackIcon} shape="circle" tone="white" wrapperSize={44} />
         )}
         <div>
           <h3 className="text-lg font-bold text-localo-text">Live Preview</h3>
@@ -41,6 +46,9 @@ export function CategoryPreviewCard({ category, form, parentCategoryLabel }: Cat
           </span>
           <span className="rounded-full bg-localo-surface px-3 py-1 text-xs font-bold text-localo-text-muted">
             {form.sortOrder || '0'}
+          </span>
+          <span className="rounded-full bg-localo-surface px-3 py-1 text-xs font-bold text-localo-text-muted">
+            {form.visualMode === 'media' ? 'Media image' : 'Built-in icon'}
           </span>
         </div>
       </div>

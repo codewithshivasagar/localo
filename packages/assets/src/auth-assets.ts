@@ -39,7 +39,7 @@ export const localoAuthAssets = {
   },
   secureTrusted: {
     key: 'secureTrusted',
-    src: createLocaloAssetPath('auth', 'secure-trusted-icon.png'),
+    src: createLocaloAssetPath('auth', 'secure-trusted-icon.svg'),
     alt: 'Secure trusted icon',
     category: 'auth'
   },

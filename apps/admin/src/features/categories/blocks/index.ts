@@ -2,6 +2,7 @@ export * from './categories-table';
 export * from './category-filter-toolbar';
 export * from './category-form-actions';
 export * from './category-form-card';
+export * from './category-media-selector';
 export * from './category-guidelines-card';
 export * from './category-preview-card';
 export * from './category-status-card';

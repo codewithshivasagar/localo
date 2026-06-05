@@ -2,7 +2,9 @@ import 'reflect-metadata';
 
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'node:path';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ApiValidationPipe } from './common/pipes/validation.pipe';
@@ -22,7 +24,7 @@ function parseCorsOrigins(corsOrigin: string, appEnv: string): string[] {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true
   });
 
@@ -35,6 +37,10 @@ async function bootstrap() {
   app.enableCors({
     origin: parseCorsOrigins(corsOrigin, appEnv),
     credentials: true
+  });
+
+  app.useStaticAssets(join(process.cwd(), 'public'), {
+    prefix: '/public'
   });
 
   app.useGlobalPipes(new ApiValidationPipe());

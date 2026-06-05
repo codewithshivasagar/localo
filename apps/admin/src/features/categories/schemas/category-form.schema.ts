@@ -1,12 +1,16 @@
 import type { CategoryResponse } from '@localo/api-client';
+import type { IconName } from '@localo/ui';
 
 export const categorySlugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+export type CategoryVisualMode = 'icon' | 'media';
 
 export interface CategoryFormState {
   description: string;
   iconMediaId: string;
   imageMediaId: string;
   isActive: boolean;
+  visualIconName: IconName;
+  visualMode: CategoryVisualMode;
   name: string;
   parentId: string;
   sortOrder: string;
@@ -18,6 +22,8 @@ export const initialCategoryFormState: CategoryFormState = {
   iconMediaId: '',
   imageMediaId: '',
   isActive: true,
+  visualIconName: 'categories',
+  visualMode: 'icon',
   name: '',
   parentId: '',
   sortOrder: '',
@@ -48,10 +54,11 @@ export function toCategoryFormState(category: CategoryResponse): CategoryFormSta
     iconMediaId: category.iconMedia?.id ?? '',
     imageMediaId: category.imageMedia?.id ?? '',
     isActive: category.isActive,
+    visualIconName: 'categories',
+    visualMode: category.imageMedia ? 'media' : 'icon',
     name: category.name,
     parentId: category.parentId ?? '',
     sortOrder: String(category.sortOrder ?? ''),
     slug: category.slug
   };
 }
-

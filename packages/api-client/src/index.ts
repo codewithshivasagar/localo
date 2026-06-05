@@ -13,6 +13,8 @@ export * from './shops/shops.api';
 export * from './shops/shops.types';
 export * from './categories/categories.api';
 export * from './categories/categories.types';
+export * from './media/media.api';
+export * from './media/media.types';
 export * from './products/products.api';
 export * from './products/products.types';
 export * from './support-tickets/support-tickets.api';
