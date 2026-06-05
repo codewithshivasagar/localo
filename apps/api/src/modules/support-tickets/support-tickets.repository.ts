@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Prisma, SupportTicketStatus } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import type { SupportTicketFilterDto } from './dto/support-ticket-filter.dto';
@@ -53,7 +53,7 @@ const supportTicketInclude = {
 
 @Injectable()
 export class SupportTicketsRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   create(data: Prisma.SupportTicketUncheckedCreateInput) {
     return this.prisma.supportTicket.create({

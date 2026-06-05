@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { CommissionSettingStatus, InvoiceStatus } from '@prisma/client';
 import {
   IsDateString,
@@ -51,12 +52,14 @@ export class CommissionLedgerFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_COMMISSION_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_COMMISSION_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_COMMISSION_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_COMMISSION_LIST_LIMIT)
@@ -76,15 +79,16 @@ export class CommissionSettingFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_COMMISSION_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_COMMISSION_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_COMMISSION_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_COMMISSION_LIST_LIMIT)
   limit: number = DEFAULT_COMMISSION_LIST_LIMIT;
 }
-

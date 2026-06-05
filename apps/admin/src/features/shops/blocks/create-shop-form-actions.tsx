@@ -37,7 +37,7 @@ export function CreateShopFormActions({
             Skip for Now
           </Button>
         ) : null}
-        <Button disabled={!canGoNext || isSubmitting} isLoading={isSubmitting} loadingLabel="Creating..." onClick={onNext} rightIcon={<Icon name={isFinalStep ? 'check' : 'chevronRight'} size="sm" tone="current" />} type="button">
+        <Button disabled={(!canGoNext && !isFinalStep) || isSubmitting} isLoading={isSubmitting} loadingLabel="Creating..." onClick={onNext} rightIcon={<Icon name={isFinalStep ? 'check' : 'chevronRight'} size="sm" tone="current" />} type="button">
           {isFinalStep ? 'Create Shop' : 'Next Step'}
         </Button>
       </div>

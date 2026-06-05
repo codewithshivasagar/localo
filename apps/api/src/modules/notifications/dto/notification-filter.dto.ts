@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsIn,
@@ -8,6 +9,7 @@ import {
   Max,
   Min
 } from 'class-validator';
+import { parseBooleanQueryParam } from '../../../common/transformers/query-param.transformers';
 import {
   DEFAULT_NOTIFICATION_LIST_LIMIT,
   DEFAULT_NOTIFICATION_LIST_PAGE,
@@ -19,6 +21,7 @@ import {
 export class NotificationFilterDto {
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) => parseBooleanQueryParam(value))
   @IsBoolean()
   isRead?: boolean;
 
@@ -41,15 +44,16 @@ export class NotificationFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_NOTIFICATION_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_NOTIFICATION_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_NOTIFICATION_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_NOTIFICATION_LIST_LIMIT)
   limit: number = DEFAULT_NOTIFICATION_LIST_LIMIT;
 }
-

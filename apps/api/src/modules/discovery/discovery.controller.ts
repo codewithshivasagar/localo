@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
+import { Controller, Get, Inject, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from '../../common/decorators/public.decorator';
 import type { ApiResponse } from '../../common/responses/api-response.type';
@@ -20,7 +20,7 @@ import { ShopDiscoveryFilterDto } from './dto/shop-discovery-filter.dto';
 @Public()
 @Controller('shops')
 export class DiscoveryController {
-  constructor(private readonly discoveryService: DiscoveryService) {}
+  constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   @Get()
   @ApiOperation({ summary: 'List active public shops' })

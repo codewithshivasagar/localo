@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ProductStatus, ShopStatus } from '@prisma/client';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import { ProductFilterDto } from '../products/dto/product-filter.dto';
 import { ProductResponseDto } from '../products/dto/product-response.dto';
@@ -16,16 +17,18 @@ import {
 
 @Injectable()
 export class DiscoveryService {
-  constructor(private readonly discoveryRepository: DiscoveryRepository) {}
+  constructor(@Inject(DiscoveryRepository) private readonly discoveryRepository: DiscoveryRepository) {}
 
   async listShops(
     filters: ShopDiscoveryFilterDto
   ): Promise<PaginationResponse<PublicShopResponseDto>> {
     this.ensurePublicShopStatus(filters.status);
 
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const openNow = filters.openNow ? buildOpenNowFilter(new Date()) : undefined;
     const [total, shops] = await this.discoveryRepository.listShops(
       filters,
@@ -70,9 +73,11 @@ export class DiscoveryService {
       throw new NotFoundException('Shop not found');
     }
 
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, products] = await this.discoveryRepository.listShopProducts(
       shopId,
       filters,

@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import { AuditLogsRepository, type AuditLogWithRelations } from './audit-logs.repository';
 import { AuditLogFilterDto } from './dto/audit-log-filter.dto';
@@ -14,9 +15,11 @@ export class AuditLogsService {
   ): Promise<PaginationResponse<AuditLogResponseDto>> {
     this.validateDateRange(filters);
 
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, auditLogs] = await this.auditLogsRepository.list(filters, skip, limit);
 
     return {
@@ -128,4 +131,3 @@ const scrub = (value: unknown): unknown => {
 
 const toJsonValue = (value: unknown): Prisma.InputJsonValue =>
   JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
-

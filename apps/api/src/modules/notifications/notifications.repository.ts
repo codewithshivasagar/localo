@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { NotificationStatus, Prisma } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import type { NotificationFilterDto } from './dto/notification-filter.dto';
 
 @Injectable()
 export class NotificationsRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   listForUser(userId: string, filters: NotificationFilterDto, skip: number, take: number) {
     const where = this.buildWhere(userId, filters);

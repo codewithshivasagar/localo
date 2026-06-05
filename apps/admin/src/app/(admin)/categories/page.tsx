@@ -1,11 +1,6 @@
-import { PagePlaceholderTemplate } from '../../../templates';
+import { CategoriesListTemplate } from '../../../features/categories';
 
 export default function CategoriesPage() {
-  return (
-    <PagePlaceholderTemplate
-      description="Prepare category governance space for future create, update, delete, and catalog organization workflows."
-      readinessItems={['Admin route ready', 'Category navigation ready', 'Category forms pending']}
-      title="Categories"
-    />
-  );
+  return <CategoriesListTemplate />;
 }
+

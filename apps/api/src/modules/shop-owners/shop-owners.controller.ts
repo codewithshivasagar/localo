@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Put } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Patch, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Role } from '@localo/shared-types';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -19,7 +19,7 @@ import { ShopOwnersService } from './shop-owners.service';
 @Roles(Role.SHOP_OWNER)
 @Controller('shop-owner/shops')
 export class ShopOwnersController {
-  constructor(private readonly shopOwnersService: ShopOwnersService) {}
+  constructor(@Inject(ShopOwnersService) private readonly shopOwnersService: ShopOwnersService) {}
 
   @Get('me')
   @ApiOperation({ summary: 'Get the authenticated shop owner shop' })

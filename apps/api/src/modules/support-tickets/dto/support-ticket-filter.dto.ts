@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { SupportTicketPriority, SupportTicketStatus } from '@prisma/client';
 import {
   IsEnum,
@@ -61,15 +62,16 @@ export class SupportTicketFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_SUPPORT_TICKET_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_SUPPORT_TICKET_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_SUPPORT_TICKET_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_SUPPORT_TICKET_LIST_LIMIT)
   limit: number = DEFAULT_SUPPORT_TICKET_LIST_LIMIT;
 }
-

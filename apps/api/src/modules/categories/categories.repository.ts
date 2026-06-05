@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import type { CategoryFilterDto } from './dto/category-filter.dto';
@@ -29,7 +29,7 @@ const categoryInclude = {
 
 @Injectable()
 export class CategoriesRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   list(filters: CategoryFilterDto, skip: number, take: number, publicOnly = false) {
     const where = this.buildWhere(filters, publicOnly);

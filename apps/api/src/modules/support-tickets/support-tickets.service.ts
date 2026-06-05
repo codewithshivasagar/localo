@@ -1,11 +1,13 @@
 import {
   BadRequestException,
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException
 } from '@nestjs/common';
 import { SupportTicketStatus } from '@prisma/client';
 import { Role } from '@localo/shared-types';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { AuditLogsService } from '../audit-logs/audit-logs.service';
@@ -22,8 +24,8 @@ import {
 @Injectable()
 export class SupportTicketsService {
   constructor(
-    private readonly supportTicketsRepository: SupportTicketsRepository,
-    private readonly auditLogsService: AuditLogsService
+    @Inject(SupportTicketsRepository) private readonly supportTicketsRepository: SupportTicketsRepository,
+    @Inject(AuditLogsService) private readonly auditLogsService: AuditLogsService
   ) {}
 
   async create(
@@ -49,9 +51,11 @@ export class SupportTicketsService {
     user: AuthenticatedUser,
     filters: SupportTicketFilterDto
   ): Promise<PaginationResponse<SupportTicketResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, tickets] = await this.supportTicketsRepository.listMine(
       user.id,
       filters,
@@ -108,9 +112,11 @@ export class SupportTicketsService {
   async listAdmin(
     filters: SupportTicketFilterDto
   ): Promise<PaginationResponse<SupportTicketResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, tickets] = await this.supportTicketsRepository.listAdmin(
       filters,
       skip,

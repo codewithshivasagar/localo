@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import { ShopStatus } from '@prisma/client';
 import {
   IsBoolean,
@@ -11,6 +12,7 @@ import {
   Max,
   Min
 } from 'class-validator';
+import { parseBooleanQueryParam } from '../../../common/transformers/query-param.transformers';
 import {
   DEFAULT_SHOP_DISCOVERY_LIMIT,
   DEFAULT_SHOP_DISCOVERY_PAGE,
@@ -47,6 +49,7 @@ export class ShopDiscoveryFilterDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) => parseBooleanQueryParam(value))
   @IsBoolean()
   openNow?: boolean;
 
@@ -67,15 +70,16 @@ export class ShopDiscoveryFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_SHOP_DISCOVERY_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_SHOP_DISCOVERY_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_SHOP_DISCOVERY_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_SHOP_DISCOVERY_LIMIT)
   limit: number = DEFAULT_SHOP_DISCOVERY_LIMIT;
 }
-

@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InvoiceStatus, Prisma } from '@prisma/client';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { AuditLogsService } from '../audit-logs/audit-logs.service';
@@ -23,16 +24,18 @@ import { UpdateCommissionSettingDto } from './dto/update-commission-setting.dto'
 @Injectable()
 export class CommissionService {
   constructor(
-    private readonly commissionRepository: CommissionRepository,
-    private readonly auditLogsService: AuditLogsService
+    @Inject(CommissionRepository) private readonly commissionRepository: CommissionRepository,
+    @Inject(AuditLogsService) private readonly auditLogsService: AuditLogsService
   ) {}
 
   async listSettings(
     filters: CommissionSettingFilterDto
   ): Promise<PaginationResponse<CommissionSettingResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, settings] = await this.commissionRepository.listSettings(
       filters,
       skip,
@@ -122,9 +125,11 @@ export class CommissionService {
   ): Promise<PaginationResponse<CommissionLedgerItemResponseDto>> {
     this.validateDateRange(filters);
 
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, ledger] = await this.commissionRepository.listLedger(
       filters,
       skip,
@@ -158,9 +163,11 @@ export class CommissionService {
     this.validateDateRange(filters);
 
     const shop = await this.getOwnedShopOrThrow(user.id);
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, ledger] = await this.commissionRepository.listLedgerForShop(
       shop.id,
       filters,

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   Prisma,
   ProductStatus,
@@ -43,7 +43,7 @@ const productInclude = {
 
 @Injectable()
 export class ProductsRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   listPublic(filters: ProductFilterDto, skip: number, take: number) {
     const where = this.buildWhere(filters, true);

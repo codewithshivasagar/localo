@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsIn,
@@ -65,15 +66,16 @@ export class AuditLogFilterDto {
 
   @ApiPropertyOptional({ default: DEFAULT_AUDIT_LOG_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_AUDIT_LOG_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_AUDIT_LOG_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_AUDIT_LOG_LIST_LIMIT)
   limit: number = DEFAULT_AUDIT_LOG_LIST_LIMIT;
 }
-

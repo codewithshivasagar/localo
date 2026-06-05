@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { NotificationFilterDto } from './dto/notification-filter.dto';
@@ -10,15 +11,17 @@ import {
 
 @Injectable()
 export class NotificationsService {
-  constructor(private readonly notificationsRepository: NotificationsRepository) {}
+  constructor(@Inject(NotificationsRepository) private readonly notificationsRepository: NotificationsRepository) {}
 
   async list(
     user: AuthenticatedUser,
     filters: NotificationFilterDto
   ): Promise<PaginationResponse<NotificationResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, notifications] = await this.notificationsRepository.listForUser(
       user.id,
       filters,
@@ -84,4 +87,3 @@ const toNotificationResponse = (
   sentAt: notification.sentAt?.toISOString() ?? null,
   createdAt: notification.createdAt.toISOString()
 });
-

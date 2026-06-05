@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -36,7 +37,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @ApiTags('Categories')
 @Controller()
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(@Inject(CategoriesService) private readonly categoriesService: CategoriesService) {}
 
   @Public()
   @Get('categories')

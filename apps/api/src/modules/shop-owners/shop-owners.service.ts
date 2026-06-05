@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { UpdateBusinessHoursDto } from './dto/update-business-hours.dto';
@@ -15,7 +15,7 @@ import {
 
 @Injectable()
 export class ShopOwnersService {
-  constructor(private readonly shopOwnersRepository: ShopOwnersRepository) {}
+  constructor(@Inject(ShopOwnersRepository) private readonly shopOwnersRepository: ShopOwnersRepository) {}
 
   async getOwnShop(user: AuthenticatedUser): Promise<ShopOwnerShopResponseDto> {
     const shop = await this.getOwnedShopOrThrow(user.id);

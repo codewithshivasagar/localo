@@ -10,7 +10,7 @@ export function Sidebar({ className, collapsed, mobileOpen, ...props }: SidebarP
   return (
     <nav
       className={cn(
-        'flex h-full min-h-dvh w-72 flex-col bg-localo-surface text-localo-text transition-transform',
+        'flex h-dvh w-72 shrink-0 flex-col overflow-hidden bg-localo-surface text-localo-text transition-transform',
         collapsed && 'w-20',
         mobileOpen === false && '-translate-x-full lg:translate-x-0',
         className

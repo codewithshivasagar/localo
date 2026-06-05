@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Patch, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Role } from '@localo/shared-types';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -27,7 +27,7 @@ import { UpdateCommissionSettingDto } from './dto/update-commission-setting.dto'
 @Roles(Role.ADMIN, Role.SUPER_ADMIN)
 @Controller('admin/commission')
 export class AdminCommissionController {
-  constructor(private readonly commissionService: CommissionService) {}
+  constructor(@Inject(CommissionService) private readonly commissionService: CommissionService) {}
 
   @Get('settings')
   @ApiOperation({ summary: 'List commission settings as an admin' })

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -36,7 +37,7 @@ import { SupportTicketsService } from './support-tickets.service';
 @ApiBearerAuth()
 @Controller('support-tickets')
 export class SupportTicketsController {
-  constructor(private readonly supportTicketsService: SupportTicketsService) {}
+  constructor(@Inject(SupportTicketsService) private readonly supportTicketsService: SupportTicketsService) {}
 
   @Post()
   @Roles(

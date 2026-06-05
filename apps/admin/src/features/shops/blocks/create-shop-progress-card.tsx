@@ -11,7 +11,7 @@ export function CreateShopProgressCard({ completedStepIds, currentStepId }: Crea
 
   return (
     <div className="space-y-5">
-      <Card className="sticky top-24">
+      <Card className="sticky top-24 z-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-localo-text">Setup Progress</h2>
           <span className="rounded-full border-4 border-localo-primary/20 bg-localo-primary/5 px-3 py-2 text-sm font-black text-localo-primary">
@@ -37,7 +37,7 @@ export function CreateShopProgressCard({ completedStepIds, currentStepId }: Crea
         </div>
       </Card>
       <Card>
-        <div className="flex gap-3">
+        <div className="flex gap-3 z-8">
           <Icon bg="success" name="note" shape="rounded" tone="primary" wrapperSize="lg" />
           <div>
             <h2 className="font-bold text-localo-text">Creation Notes</h2>

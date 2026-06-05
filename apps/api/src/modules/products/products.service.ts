@@ -1,10 +1,12 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException
 } from '@nestjs/common';
 import { Prisma, ProductStatus } from '@prisma/client';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -16,7 +18,7 @@ import { ProductsRepository, type ProductWithRelations } from './products.reposi
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly productsRepository: ProductsRepository) {}
+  constructor(@Inject(ProductsRepository) private readonly productsRepository: ProductsRepository) {}
 
   async listPublic(
     filters: ProductFilterDto
@@ -24,9 +26,11 @@ export class ProductsService {
     this.ensurePublicProductStatus(filters);
     this.validatePriceFilter(filters);
 
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, products] = await this.productsRepository.listPublic(
       filters,
       skip,
@@ -63,9 +67,11 @@ export class ProductsService {
     this.validatePriceFilter(filters);
 
     const shop = await this.getOwnedShopOrThrow(user.id);
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, products] = await this.productsRepository.listForShop(
       shop.id,
       filters,

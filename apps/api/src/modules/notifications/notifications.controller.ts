@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseUUIDPipe, Patch, Query } from '@nestjs/common';
+import { Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import type { ApiResponse } from '../../common/responses/api-response.type';
@@ -16,7 +16,7 @@ import { NotificationsService } from './notifications.service';
 @ApiBearerAuth()
 @Controller('notifications')
 export class NotificationsController {
-  constructor(private readonly notificationsService: NotificationsService) {}
+  constructor(@Inject(NotificationsService) private readonly notificationsService: NotificationsService) {}
 
   @Get()
   @ApiOperation({ summary: 'List my notifications' })

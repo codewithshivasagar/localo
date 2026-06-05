@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -14,6 +15,7 @@ import {
   ShopStatus,
   ShopVerificationStatus
 } from '@prisma/client';
+import { parseBooleanQueryParam } from '../../../common/transformers/query-param.transformers';
 import {
   DEFAULT_SHOP_LIST_LIMIT,
   DEFAULT_SHOP_LIST_PAGE,
@@ -53,17 +55,20 @@ export class ShopFilterDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) => parseBooleanQueryParam(value))
   @IsBoolean()
   isFeatured?: boolean;
 
   @ApiPropertyOptional({ default: DEFAULT_SHOP_LIST_PAGE })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   page: number = DEFAULT_SHOP_LIST_PAGE;
 
   @ApiPropertyOptional({ default: DEFAULT_SHOP_LIST_LIMIT })
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(MAX_SHOP_LIST_LIMIT)

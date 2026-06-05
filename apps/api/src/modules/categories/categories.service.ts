@@ -1,10 +1,12 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { normalizePagination } from '../../common/pagination/pagination';
 import type { PaginationResponse } from '../../common/responses/pagination-response.type';
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.type';
 import { AuditLogsService } from '../audit-logs/audit-logs.service';
@@ -17,16 +19,18 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @Injectable()
 export class CategoriesService {
   constructor(
-    private readonly categoriesRepository: CategoriesRepository,
-    private readonly auditLogsService: AuditLogsService
+    @Inject(CategoriesRepository) private readonly categoriesRepository: CategoriesRepository,
+    @Inject(AuditLogsService) private readonly auditLogsService: AuditLogsService
   ) {}
 
   async listPublic(
     filters: CategoryFilterDto
   ): Promise<PaginationResponse<CategoryResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = normalizePagination(filters.page, filters.limit, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 100
+    });
     const [total, categories] = await this.categoriesRepository.list(
       filters,
       skip,

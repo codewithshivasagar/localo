@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -37,7 +38,7 @@ import { ProductsService } from './products.service';
 @ApiTags('Products')
 @Controller('products')
 export class PublicProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(@Inject(ProductsService) private readonly productsService: ProductsService) {}
 
   @Public()
   @Get()
