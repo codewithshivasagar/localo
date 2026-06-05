@@ -25,11 +25,11 @@ export function ShopFilterToolbar({
 }: ShopFilterToolbarProps) {
   return (
     <Card className="space-y-4" padding="md">
-      <div className="flex items-center gap-2 text-sm font-semibold text-localo-text">
+      <div className="flex items-center gap-2 text-sm font-bold text-localo-text">
         <Icon name="filter" size="sm" tone="primary" />
         Filters
       </div>
-      <div className="grid gap-3 lg:grid-cols-[minmax(16rem,1fr)_13rem_13rem_auto]">
+      <div className="grid gap-3 lg:grid-cols-[minmax(20rem,1fr)_13rem_13rem_auto]">
         <div className="relative">
           <Icon
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"

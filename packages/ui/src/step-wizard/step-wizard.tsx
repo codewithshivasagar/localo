@@ -38,13 +38,13 @@ export function StepWizard({
   ...props
 }: StepWizardProps) {
   return (
-    <nav aria-label="Progress" className={cn('rounded-localo-2xl border border-localo-border bg-localo-surface p-3 shadow-localo-sm', className)} {...props}>
-      <ol className="grid gap-3 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
+    <nav aria-label="Progress" className={cn('rounded-localo-2xl border border-localo-border bg-localo-surface p-4 shadow-localo-sm shadow-slate-900/5', className)} {...props}>
+      <ol className="grid gap-3 lg:grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]">
         {steps.map((step, index) => {
           const isCurrent = step.id === currentStepId || step.status === 'current';
           const isClickable = Boolean(onStepClick && canClickStep(step));
           const marker = (
-            <span className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-full border', statusClasses[step.status])}>
+            <span className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 shadow-sm', statusClasses[step.status])}>
               <StepMarker index={index} status={step.status} />
             </span>
           );

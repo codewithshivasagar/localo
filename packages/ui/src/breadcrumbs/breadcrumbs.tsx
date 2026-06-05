@@ -14,12 +14,12 @@ export function Breadcrumbs({
 }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb" className={cn('overflow-x-auto', className)} {...props}>
-      <ol className="flex min-h-10 items-center gap-2 whitespace-nowrap text-sm">
+      <ol className="flex min-h-9 items-center gap-2 whitespace-nowrap text-sm">
         {items.map((item, index) => {
           const isCurrent = isCurrentItem(item, index, items);
           const linkClassName = cn(
             'rounded-localo-sm font-semibold text-localo-text-muted transition hover:text-localo-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-localo-primary/30',
-            isCurrent && 'pointer-events-none text-localo-text'
+            isCurrent && 'pointer-events-none text-localo-primary'
           );
 
           return (

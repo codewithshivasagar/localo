@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException
 } from '@nestjs/common';
@@ -15,19 +16,27 @@ import { UpdateShopDto } from './dto/update-shop.dto';
 import { AssignShopOwnerDto } from './dto/assign-shop-owner.dto';
 import { UpdateShopStatusDto } from './dto/update-shop-status.dto';
 import { ShopsRepository, type ShopWithRelations } from './shops.repository';
+import {
+  DEFAULT_SHOP_LIST_LIMIT,
+  DEFAULT_SHOP_LIST_PAGE,
+  MAX_SHOP_LIST_LIMIT
+} from './shops.constants';
 
 @Injectable()
 export class ShopsService {
   constructor(
+    @Inject(ShopsRepository)
     private readonly shopsRepository: ShopsRepository,
+    @Inject(AuditLogsService)
     private readonly auditLogsService: AuditLogsService
   ) {}
 
   async list(filters: ShopFilterDto): Promise<PaginationResponse<ShopResponseDto>> {
-    const page = filters.page;
-    const limit = filters.limit;
+    const normalizedFilters = this.normalizeListFilters(filters);
+    const page = normalizedFilters.page;
+    const limit = normalizedFilters.limit;
     const skip = (page - 1) * limit;
-    const [total, shops] = await this.shopsRepository.list(filters, skip, limit);
+    const [total, shops] = await this.shopsRepository.list(normalizedFilters, skip, limit);
 
     return {
       success: true,
@@ -39,6 +48,14 @@ export class ShopsService {
         total,
         totalPages: Math.ceil(total / limit)
       }
+    };
+  }
+
+  private normalizeListFilters(filters: ShopFilterDto): ShopFilterDto {
+    return {
+      ...filters,
+      page: normalizeInteger(filters.page, DEFAULT_SHOP_LIST_PAGE, 1),
+      limit: normalizeInteger(filters.limit, DEFAULT_SHOP_LIST_LIMIT, 1, MAX_SHOP_LIST_LIMIT)
     };
   }
 
@@ -273,3 +290,18 @@ const slugify = (value: string) =>
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+
+const normalizeInteger = (
+  value: unknown,
+  fallback: number,
+  min: number,
+  max = Number.MAX_SAFE_INTEGER
+) => {
+  const parsed = typeof value === 'number' ? value : Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+
+  return Math.min(Math.max(Math.trunc(parsed), min), max);
+};

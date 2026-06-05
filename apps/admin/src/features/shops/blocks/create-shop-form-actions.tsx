@@ -7,6 +7,7 @@ interface CreateShopFormActionsProps {
   canGoNext: boolean;
   isFinalStep: boolean;
   isPaymentStep: boolean;
+  isSubmitting?: boolean;
   onBack: () => void;
   onNext: () => void;
   onSkipPayment: () => void;
@@ -17,6 +18,7 @@ export function CreateShopFormActions({
   canGoNext,
   isFinalStep,
   isPaymentStep,
+  isSubmitting,
   onBack,
   onNext,
   onSkipPayment
@@ -35,7 +37,7 @@ export function CreateShopFormActions({
             Skip for Now
           </Button>
         ) : null}
-        <Button disabled={!canGoNext} onClick={onNext} rightIcon={<Icon name={isFinalStep ? 'check' : 'chevronRight'} size="sm" tone="current" />} type="button">
+        <Button disabled={!canGoNext || isSubmitting} isLoading={isSubmitting} loadingLabel="Creating..." onClick={onNext} rightIcon={<Icon name={isFinalStep ? 'check' : 'chevronRight'} size="sm" tone="current" />} type="button">
           {isFinalStep ? 'Create Shop' : 'Next Step'}
         </Button>
       </div>

@@ -18,9 +18,9 @@ const cardPadding: Record<CardPadding, string> = {
 };
 
 const cardVariants: Record<CardVariant, string> = {
-  default: 'border-localo-border bg-localo-surface shadow-localo-sm',
-  elevated: 'border-localo-border bg-localo-surface shadow-localo-lg',
-  subtle: 'border-localo-border bg-localo-surface/90 shadow-none'
+  default: 'border-localo-border bg-localo-surface shadow-localo-sm shadow-slate-900/5',
+  elevated: 'border-localo-border bg-localo-surface shadow-localo-lg shadow-slate-900/10',
+  subtle: 'border-localo-border bg-localo-surface/90 shadow-sm shadow-slate-900/5'
 };
 
 export function Card({ className, padded = true, padding, variant = 'default', ...props }: CardProps) {
@@ -29,7 +29,7 @@ export function Card({ className, padded = true, padding, variant = 'default', .
   return (
     <div
       className={cn(
-        'rounded-localo-2xl border',
+        'rounded-localo-2xl border backdrop-blur-sm',
         cardVariants[variant],
         cardPadding[resolvedPadding],
         className

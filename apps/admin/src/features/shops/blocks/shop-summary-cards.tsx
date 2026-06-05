@@ -40,18 +40,18 @@ export function ShopSummaryCards({ metrics }: ShopSummaryCardsProps) {
   return (
     <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Shop summary">
       {summaryItems.map((item) => (
-        <Card className="flex items-start justify-between gap-4" key={item.key} padding="md">
+        <Card className="flex min-h-36 items-start justify-between gap-4" key={item.key} padding="md">
           <div className="min-w-0">
-            <p className="text-sm font-medium text-localo-text-muted">{item.label}</p>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-localo-text">{metrics[item.key]}</p>
-            <p className="mt-1 text-xs font-medium text-localo-text-muted">{item.description}</p>
+            <p className="text-sm font-bold text-localo-text-muted">{item.label}</p>
+            <p className="mt-2 text-3xl font-black tracking-tight text-localo-text">{metrics[item.key]}</p>
+            <p className="mt-2 text-xs font-semibold text-localo-text-muted">{item.description}</p>
           </div>
           <Icon
             bg={item.tone}
             name={item.icon}
-            shape="rounded"
-            tone="white"
-            wrapperSize="xl"
+            shape="circle"
+            tone={item.tone === 'warning' ? 'warning' : item.tone === 'danger' ? 'danger' : 'primary'}
+            wrapperSize={48}
           />
         </Card>
       ))}

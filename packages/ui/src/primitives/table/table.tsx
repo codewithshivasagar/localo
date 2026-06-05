@@ -2,7 +2,7 @@ import type { HTMLAttributes, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttri
 import { cn } from '../../utils/cn';
 
 export function TableContainer({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('w-full overflow-x-auto rounded-localo-lg border border-localo-border bg-localo-surface', className)} {...props} />;
+  return <div className={cn('w-full overflow-x-auto rounded-localo-xl border border-localo-border bg-localo-surface shadow-localo-sm shadow-slate-900/5', className)} {...props} />;
 }
 
 export function Table({ className, ...props }: TableHTMLAttributes<HTMLTableElement>) {
@@ -10,7 +10,7 @@ export function Table({ className, ...props }: TableHTMLAttributes<HTMLTableElem
 }
 
 export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className={cn('bg-localo-surface-muted text-localo-text', className)} {...props} />;
+  return <thead className={cn('bg-localo-surface-muted/80 text-localo-text', className)} {...props} />;
 }
 
 export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
@@ -18,15 +18,15 @@ export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSecti
 }
 
 export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
-  return <tr className={cn('border-b border-localo-border last:border-0', className)} {...props} />;
+  return <tr className={cn('border-b border-localo-border transition-colors last:border-0 hover:bg-localo-surface-muted/45', className)} {...props} />;
 }
 
 export function TableHead({ className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
-  return <th className={cn('h-12 px-4 text-left align-middle text-xs font-bold uppercase tracking-wide text-localo-text-muted', className)} {...props} />;
+  return <th className={cn('h-12 px-5 text-left align-middle text-xs font-black uppercase tracking-wide text-localo-text-muted', className)} {...props} />;
 }
 
 export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={cn('min-h-12 px-4 py-3 align-middle text-localo-text', className)} {...props} />;
+  return <td className={cn('min-h-14 px-5 py-3.5 align-middle text-localo-text', className)} {...props} />;
 }
 
 export function TableCaption({ className, ...props }: HTMLAttributes<HTMLTableCaptionElement>) {

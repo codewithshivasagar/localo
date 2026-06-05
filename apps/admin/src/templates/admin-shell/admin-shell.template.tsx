@@ -10,7 +10,7 @@ export interface AdminShellTemplateProps {
 export function AdminShellTemplate({ children }: AdminShellTemplateProps) {
   return (
     <DashboardShell
-      className="bg-localo-background lg:grid-cols-[18rem_minmax(0,1fr)]"
+      className="bg-localo-background lg:grid-cols-[17.5rem_minmax(0,1fr)]"
       sidebar={<AdminSidebarTemplate />}
       topbar={<AdminTopbarTemplate />}
     >

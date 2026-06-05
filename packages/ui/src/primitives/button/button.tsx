@@ -2,7 +2,7 @@ import { cn } from '../../utils/cn';
 import type { ButtonProps, ButtonSize, ButtonVariant } from './button.types';
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: 'bg-localo-primary text-localo-primary-foreground shadow-localo-sm hover:brightness-95 active:brightness-90',
+  primary: 'bg-localo-primary text-localo-primary-foreground shadow-localo-md shadow-localo-primary/20 hover:brightness-95 active:brightness-90',
   secondary: 'bg-localo-surface-muted text-localo-text shadow-localo-sm hover:bg-localo-border',
   outline: 'border border-localo-border bg-localo-surface text-localo-text shadow-localo-sm hover:bg-localo-surface-muted',
   ghost: 'text-localo-text hover:bg-localo-surface-muted',
@@ -34,7 +34,7 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex touch-manipulation items-center justify-center gap-2 rounded-localo-lg font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-localo-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-55',
+        'inline-flex touch-manipulation items-center justify-center gap-2 rounded-localo-lg font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-localo-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-55',
         buttonVariants[variant],
         buttonSizes[size],
         fullWidth && 'w-full',

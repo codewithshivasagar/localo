@@ -112,9 +112,9 @@ export function ShopsTable({ hasActiveFilters, isRefreshing, shops }: ShopsTable
 
   return (
     <Card className="overflow-visible" padded={false}>
-      <div className="flex flex-col gap-2 border-b border-localo-border p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2 border-b border-localo-border p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-base font-bold text-localo-text">Shop Directory</h2>
+          <h2 className="text-lg font-black text-localo-text">All Shops</h2>
           <p className="text-sm text-localo-text-muted">
             Review approval state, ownership, and shop health from one place.
           </p>
@@ -126,7 +126,7 @@ export function ShopsTable({ hasActiveFilters, isRefreshing, shops }: ShopsTable
           </div>
         ) : null}
       </div>
-      <TableContainer className="rounded-none border-0">
+      <TableContainer className="rounded-none border-0 shadow-none">
         <Table className="min-w-[74rem]">
           <TableHeader>
             <TableRow>
@@ -146,7 +146,7 @@ export function ShopsTable({ hasActiveFilters, isRefreshing, shops }: ShopsTable
               <TableRow className="hover:bg-localo-surface-muted/60" key={shop.id}>
                 <TableCell>
                   <div className="flex min-w-64 items-center gap-3">
-                    <Icon bg="primary" name="shop" shape="rounded" tone="white" wrapperSize="lg" />
+                    <Icon bg="success" name="shop" shape="rounded" tone="primary" wrapperSize="lg" />
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-localo-text">{shop.name}</p>
                       <p className="truncate text-xs text-localo-text-muted">
@@ -193,14 +193,14 @@ export function ShopsTable({ hasActiveFilters, isRefreshing, shops }: ShopsTable
                   <div className="flex items-center justify-end gap-2">
                     <Link
                       aria-label={`View ${shop.name}`}
-                      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-localo-md border border-localo-border bg-localo-surface text-localo-text-muted transition hover:border-localo-primary hover:text-localo-primary"
+                      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-localo-lg border border-localo-border bg-localo-surface text-localo-text-muted shadow-sm transition hover:border-localo-primary hover:text-localo-primary"
                       href={adminShopRoutes.detail(shop.id)}
                     >
                       <Icon name="eye" size="sm" tone="current" />
                     </Link>
                     <Link
                       aria-label={`Edit ${shop.name}`}
-                      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-localo-md border border-localo-border bg-localo-surface text-localo-text-muted transition hover:border-localo-primary hover:text-localo-primary"
+                      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-localo-lg border border-localo-border bg-localo-surface text-localo-text-muted shadow-sm transition hover:border-localo-primary hover:text-localo-primary"
                       href={adminShopRoutes.edit(shop.id)}
                     >
                       <Icon name="edit" size="sm" tone="current" />

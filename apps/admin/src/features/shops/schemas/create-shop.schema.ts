@@ -29,6 +29,8 @@ export interface CreateShopFormState {
   upiId: string;
   website: string;
   name: string;
+  ownerUserId: string;
+  isFeatured: boolean;
 }
 
 export const initialCreateShopFormState: CreateShopFormState = {
@@ -57,7 +59,9 @@ export const initialCreateShopFormState: CreateShopFormState = {
   tags: '',
   upiId: '',
   website: '',
-  name: ''
+  name: '',
+  ownerUserId: '',
+  isFeatured: false
 };
 
 export function createSlug(value: string) {
@@ -105,4 +109,14 @@ export function isCreateShopStepValid(stepId: CreateShopStepId, form: CreateShop
   }
 
   return true;
+}
+
+export function isCreateShopFormReadyForSubmit(form: CreateShopFormState) {
+  return (
+    isCreateShopStepValid(createShopStepIds.basicInfo, form) &&
+    isCreateShopStepValid(createShopStepIds.contact, form) &&
+    isCreateShopStepValid(createShopStepIds.category, form) &&
+    isCreateShopStepValid(createShopStepIds.location, form) &&
+    Boolean(form.ownerUserId)
+  );
 }

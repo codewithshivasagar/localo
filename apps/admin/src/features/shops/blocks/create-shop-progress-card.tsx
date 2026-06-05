@@ -11,10 +11,10 @@ export function CreateShopProgressCard({ completedStepIds, currentStepId }: Crea
 
   return (
     <div className="space-y-5">
-      <Card>
+      <Card className="sticky top-24">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-localo-text">Setup Progress</h2>
-          <span className="rounded-full border-4 border-localo-primary/30 px-3 py-2 text-sm font-bold text-localo-primary">
+          <span className="rounded-full border-4 border-localo-primary/20 bg-localo-primary/5 px-3 py-2 text-sm font-black text-localo-primary">
             {currentIndex + 1}/6
           </span>
         </div>
@@ -25,8 +25,8 @@ export function CreateShopProgressCard({ completedStepIds, currentStepId }: Crea
 
             return (
               <div className="flex items-center gap-3 border-b border-localo-border py-3 last:border-0" key={step.id}>
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-localo-border bg-localo-surface-muted text-xs font-bold text-localo-text-muted">
-                  {isDone ? <Icon name="check" size="xs" tone="primary" /> : index + 1}
+                <span className={isDone || isCurrent ? 'flex h-8 w-8 items-center justify-center rounded-full bg-localo-primary text-xs font-black text-white' : 'flex h-8 w-8 items-center justify-center rounded-full border border-localo-border bg-localo-surface-muted text-xs font-black text-localo-text-muted'}>
+                  {isDone ? <Icon name="check" size="xs" tone="white" /> : index + 1}
                 </span>
                 <span className={isCurrent ? 'font-bold text-localo-primary' : 'font-semibold text-localo-text'}>
                   {step.title}{step.optional ? ' (Optional)' : ''}

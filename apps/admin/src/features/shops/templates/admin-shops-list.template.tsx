@@ -49,7 +49,7 @@ export function AdminShopsListTemplate() {
               Refresh
             </Button>
             <Link
-              className="inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-localo-md bg-localo-primary px-4 text-sm font-semibold text-localo-primary-foreground shadow-localo-sm transition hover:bg-localo-primary/90 focus:outline-none focus:ring-2 focus:ring-localo-primary/30"
+              className="inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-localo-lg bg-localo-primary px-5 text-sm font-bold text-localo-primary-foreground shadow-localo-md shadow-localo-primary/20 transition hover:bg-localo-primary/90 focus:outline-none focus:ring-2 focus:ring-localo-primary/30"
               href={adminShopRoutes.create}
             >
               <Icon name="plus" size="sm" tone="current" />

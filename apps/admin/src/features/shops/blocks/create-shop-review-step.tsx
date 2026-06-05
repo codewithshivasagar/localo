@@ -19,7 +19,7 @@ export function CreateShopReviewStep({ form, onEditStep }: StepProps) {
   const sections = [
     { icon: 'shop', title: 'Basic Info', step: 0, rows: [['Shop Name', form.name], ['Slug', form.slug], ['Short Description', form.shortDescription]] },
     { icon: 'phone', title: 'Contact Details', step: 1, rows: [['Phone', form.phone], ['Email', form.email], ['Website', form.website]] },
-    { icon: 'categories', title: 'Category & Discovery', step: 2, rows: [['Category', form.categoryId], ['Tags', form.tags]] },
+    { icon: 'categories', title: 'Category & Discovery', step: 2, rows: [['Category ID', form.categoryId], ['Tags', form.tags], ['Featured', form.isFeatured ? 'Yes' : 'No']] },
     { icon: 'mapPin', title: 'Location', step: 3, rows: [['Address', form.addressLine1], ['City', form.city], ['Coordinates', [form.latitude, form.longitude].filter(Boolean).join(', ')]] },
     { icon: 'commission', title: 'Payment Details', step: 4, rows: [['UPI ID', form.upiId], ['Account Holder', form.accountHolderName], ['GST', form.gstNumber]] }
   ] as const;

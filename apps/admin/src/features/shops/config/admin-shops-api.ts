@@ -1,8 +1,9 @@
-import { createHttpClient, createShopsApi } from '@localo/api-client';
+import { createCategoriesApi, createHttpClient, createShopsApi } from '@localo/api-client';
 import { adminApiConfig } from '../../../config';
 
-export const adminShopsApi = createShopsApi(
-  createHttpClient({
-    baseUrl: adminApiConfig.baseUrl
-  })
-);
+const adminHttpClient = createHttpClient({
+  baseUrl: adminApiConfig.baseUrl
+});
+
+export const adminCategoriesApi = createCategoriesApi(adminHttpClient);
+export const adminShopsApi = createShopsApi(adminHttpClient);

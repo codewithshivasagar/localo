@@ -21,7 +21,7 @@ export function Sidebar({ className, collapsed, mobileOpen, ...props }: SidebarP
 }
 
 export function SidebarHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('flex min-h-16 items-center gap-3 border-b border-localo-border px-4', className)} {...props} />;
+  return <div className={cn('flex min-h-16 items-center gap-3 border-b border-localo-border/15 px-4', className)} {...props} />;
 }
 
 export function SidebarContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
@@ -29,7 +29,7 @@ export function SidebarContent({ className, ...props }: HTMLAttributes<HTMLDivEl
 }
 
 export function SidebarFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('border-t border-localo-border p-3', className)} {...props} />;
+  return <div className={cn('border-t border-localo-border/15 p-3', className)} {...props} />;
 }
 
 export function SidebarGroup({ className, title, ...props }: HTMLAttributes<HTMLDivElement> & { title?: ReactNode }) {

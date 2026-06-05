@@ -8,6 +8,7 @@ import {
   Post,
   Query
 } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -38,7 +39,7 @@ import { ShopsService } from './shops.service';
 @Roles(Role.SUPER_ADMIN, Role.ADMIN)
 @Controller('admin/shops')
 export class ShopsController {
-  constructor(private readonly shopsService: ShopsService) {}
+  constructor(@Inject(ShopsService) private readonly shopsService: ShopsService) {}
 
   @Get()
   @ApiOperation({ summary: 'List shops for admins' })
