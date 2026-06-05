@@ -107,6 +107,12 @@ Toast
 Sidebar
 ```
 
+### Icons
+
+Use the shared `Icon` component from `@localo/ui` for app and feature icons.
+
+Do not import `lucide-react` directly inside app feature screens unless there is a strong reason. Use `name` for standard Localo icons and `customIcon`/`svg` only for brand or special-purpose artwork that is not covered by the shared icon map.
+
 ---
 
 ## Component Levels

@@ -1,5 +1,7 @@
 export * from './utils';
 
+export * from './icons';
+
 export * from './primitives/avatar';
 export * from './primitives/badge';
 export * from './primitives/button';
