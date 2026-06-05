@@ -1,6 +1,8 @@
 export * from './utils';
 
 export * from './icons';
+export * from './breadcrumbs';
+export * from './step-wizard';
 
 export * from './primitives/avatar';
 export * from './primitives/badge';
@@ -44,7 +46,11 @@ export * from './feedback/empty-state';
 export * from './feedback/error-state';
 export * from './feedback/loading-state';
 
-export * from './navigation/breadcrumbs';
+export {
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator
+} from './navigation/breadcrumbs';
 export * from './navigation/mobile-nav';
 export * from './navigation/nav-item';
 export * from './navigation/pagination';

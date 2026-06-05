@@ -548,6 +548,16 @@ Put business components in app feature folders.
 
 ---
 
+## Page Hierarchy And Wizards
+
+Use `Breadcrumbs` from `@localo/ui` for page hierarchy.
+
+Use `StepWizard` from `@localo/ui` for multi-step flow indicators.
+
+`StepWizard` must not own business validation or form state. Feature forms control validation and pass step status into the shared component.
+
+---
+
 ## Sidebar Rule
 
 `packages/ui` can provide generic sidebar primitives:
