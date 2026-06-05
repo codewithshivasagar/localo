@@ -99,6 +99,11 @@ export interface ShopFilterQuery extends PaginationQuery {
   location?: string;
   openNow?: boolean;
   status?: string;
+  verificationStatus?: string;
+  commissionStatus?: string;
+  ownerUserId?: string;
+  primaryCategoryId?: string;
+  isFeatured?: boolean;
 }
 
 export type CreateShopRequest = ApiRecord & {
